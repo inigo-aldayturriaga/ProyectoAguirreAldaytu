@@ -3,8 +3,9 @@ package datos;
 import java.util.ArrayList;
 
 public class Azafata {
-	ArrayList<String> idiomas;
-
+	ArrayList<String> idiomas; //Idiomas en los que se expresa la azafata
+	
+	//Getters y setters
 	public ArrayList<String> getIdiomas() {
 		return idiomas;
 	}

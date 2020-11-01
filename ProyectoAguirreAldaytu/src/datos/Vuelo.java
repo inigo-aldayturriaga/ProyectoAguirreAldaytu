@@ -1,15 +1,15 @@
 package datos;
 
 public class Vuelo {
-	int idAvion;
-	String origen;
-	String destino;
-	int horaSalida;
-	int horaLLegada;
-	int numeroPasajeros;
-	int maximoPasajeros;
+	int idAvion;//Identificador del avion
+	String origen;//Lugar de origen del vuelo
+	String destino;//Lugar de destino del vuelo
+	int horaSalida;//Hora de salida del vuelo
+	int horaLLegada;//Hora de llegada del vuelo
+	int numeroPasajeros;//Cantidad de pasajeros que van en el vuelo
+	int maximoPasajeros;//Cantidad maxima de pasajeros de ese vuelo
 	
-
+	//Getters y setters
 	public int getIdAvion() {
 		return idAvion;
 	}
