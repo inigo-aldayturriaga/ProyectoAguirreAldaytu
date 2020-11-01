@@ -1,8 +1,9 @@
 package datos;
 public class Pasajero extends Persona {
-	int numeroBillete;
-	ClasePasajero clase;
+	int numeroBillete;//Numero del boleto del viaje para identificarle
+	ClasePasajero clase;//A partir de la enumeracion ClasePasajero, la clase del pasajero
 
+	//Getters y setters
 	public int getNumeroBillete() {
 		return numeroBillete;
 	}

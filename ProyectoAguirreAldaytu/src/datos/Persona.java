@@ -1,11 +1,13 @@
 package datos;
 
 public abstract class Persona {
-	String nombre;
-	String apellido;
-	int edad;
-	String dni;
-	String residencia;
+	String nombre;//Nombre de la persona
+	String apellido;//Primer apellido de la persona
+	int edad;//Edad de la persona
+	String dni;//DNI con la letra incluida
+	String residencia;//Lugar donde vive 
+	
+	//Getters y setters
 	public String getNombre() {
 		return nombre;
 	}

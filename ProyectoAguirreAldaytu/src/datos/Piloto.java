@@ -1,8 +1,8 @@
 package datos;
 public class Piloto extends Persona {
-	int anyosExperiencia;
-	int vuelosRealizados;
-	TipoPiloto tipo;
+	int anyosExperiencia;//Años que lleva conduciendo aviones el piloto
+	int vuelosRealizados;//Numero de vuelos realizados en avion
+	TipoPiloto tipo;//De tipo comercial o privado
 	
 	
 	public int getAnyosExperiencia() {
