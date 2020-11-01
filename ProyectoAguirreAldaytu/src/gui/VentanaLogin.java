@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import bd.BaseDeDatos;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -72,13 +74,40 @@ public class VentanaLogin extends JFrame {
 		getContentPane().add(pCentro,BorderLayout.CENTER);
 		getContentPane().add(pSur,BorderLayout.SOUTH);
 		
-		
+		/**
+		 * Eventos
+		 */
 		bConfirmar.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TO DO
-				
+				String nombre = tfNombre.getText();
+				String contrasenia = tfContrasenia.getText();
+				/**
+				 * Si el nombre y la contrasenia es admin entraremos como administrador, sino en la variable resultado del metodo de la base de datos sabemos si no existe el usuario, si existe el usuario pero la contrasenia está mal o si lo ha metido bien
+				 */
+				if(nombre.equals("admin") && contrasenia.equals("admin")) {
+					new VentanaAdmin();
+					ventana.dispose();
+				}else {
+					int resultado = BaseDeDatos.comprobarUsuario(nombre, contrasenia);
+					if(resultado == 0) {
+						JOptionPane.showMessageDialog(null, "Tienes que registrarte","ACCESO DENEGADO",JOptionPane.ERROR_MESSAGE);
+						String nombreUsuario = JOptionPane.showInputDialog("Introduce tu nombre: ");
+						while(BaseDeDatos.existeUsuario(nombreUsuario)) {
+							nombreUsuario = JOptionPane.showInputDialog("Ese nombre ya está ocupado, introduce otro: ");
+						}
+						String contraseniaUsuario = JOptionPane.showInputDialog("Introduce una contraseña: ");
+						BaseDeDatos.insertarUsuario(nombreUsuario, contraseniaUsuario);
+					}else if (resultado == 1) {
+						JOptionPane.showMessageDialog(null, "La contraseña es incorrecta","ACCESO DENEGADO",JOptionPane.ERROR_MESSAGE);
+						ventana.dispose();
+						
+					}else {
+						JOptionPane.showMessageDialog(null, "BIENVENIDO","ACCESO PERMITIDO",JOptionPane.INFORMATION_MESSAGE);
+						ventana.dispose();
+					}	
+				}
 			}
 		});
 		
@@ -98,16 +127,6 @@ public class VentanaLogin extends JFrame {
 				new VentanaRecuperarContrasenia();
 				ventana.dispose();
 			}
-		});
-		setVisible(true);
-		
+		});	
 	}
-	public static void main(String[] args) {
-		VentanaLogin vp = new VentanaLogin();
-	}
-	
-	
-	
-	
-
 }

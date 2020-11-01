@@ -35,10 +35,14 @@ public class VentanaPrincipal extends JFrame {
 		setVisible(true);
 	}
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
+		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new VentanaPrincipal();
+				try {
+					VentanaLogin vl = new VentanaLogin();
+					vl.setVisible(true);
+				}catch (Exception e){
+					e.printStackTrace();	
+				}
 			}
 		});
 	}

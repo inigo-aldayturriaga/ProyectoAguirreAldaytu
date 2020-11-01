@@ -6,6 +6,7 @@ public abstract class Persona {
 	int edad;
 	String dni;
 	String residencia;
+	String contrasenia;
 	public String getNombre() {
 		return nombre;
 	}
