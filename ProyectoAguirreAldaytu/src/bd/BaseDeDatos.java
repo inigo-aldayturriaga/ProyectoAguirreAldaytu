@@ -12,7 +12,7 @@ public class BaseDeDatos {
 	 * @return	Conexión con la base de datos indicada
 	 */
 	
-	public static Connection initBD( String nombreBD ) {
+	public static Connection inicializarBD( String nombreBD ) {
 		try {
 		    Class.forName("org.sqlite.JDBC");
 		    Connection con = DriverManager.getConnection("jdbc:sqlite:" + nombreBD );
@@ -26,7 +26,7 @@ public class BaseDeDatos {
 	 * @param con	Conexión creada
 	 * @return	sentencia de trabajo si se crea correctamente
 	 */
-	public static Statement usarCrearTablasBD( Connection con ) {
+	public static Statement crearTablasBD( Connection con ) {
 		try {
 			Statement statement = con.createStatement();
 			statement.executeUpdate("create table Persona "+
@@ -46,7 +46,7 @@ public class BaseDeDatos {
 		try {
 			Statement statement = con.createStatement();
 			statement.executeUpdate("drop table if exists Persona");
-			return usarCrearTablasBD( con );
+			return crearTablasBD( con );
 		} catch (SQLException e) {
 			return null;
 		}
@@ -69,7 +69,7 @@ public class BaseDeDatos {
 	public static boolean existeUsuario(String nombre) {
 		boolean existeUsuario = false;
 		String sql = "SELECT * FROM Persona WHERE nombre ='"+nombre+"'";
-		Connection con = initBD("deustoAirport.db");
+		Connection con = inicializarBD("deustoAirport.db");
 		Statement st;
 		try {
 			st = con.createStatement(); 
@@ -94,7 +94,7 @@ public class BaseDeDatos {
 		int resultado = 0;
 		String s = "SELECT * FROM Persona WHERE nombre = '"+nombre+"'";
 		
-		Connection c = initBD("deustoAirport.db");
+		Connection c = inicializarBD("deustoAirport.db");
 		try {
 			Statement st = c.createStatement();
 			ResultSet rs = st.executeQuery(s);
@@ -117,7 +117,7 @@ public class BaseDeDatos {
 	public static void insertarUsuario(String nombre, String contrasenia) {
 		
 		String s = "INSERT INTO Persona VALUES('"+nombre+"','"+contrasenia+"')";
-		Connection c = BaseDeDatos.initBD("deustoAirport.db");
+		Connection c = BaseDeDatos.inicializarBD("deustoAirport.db");
 		try {
 			Statement st = c.createStatement();
 			st.executeUpdate(s);

@@ -9,6 +9,8 @@ public class Vuelo {
 	int numeroPasajeros;//Cantidad de pasajeros que van en el vuelo
 	int maximoPasajeros;//Cantidad maxima de pasajeros de ese vuelo
 	
+	
+	
 	//Getters y setters
 	public int getIdAvion() {
 		return idAvion;
