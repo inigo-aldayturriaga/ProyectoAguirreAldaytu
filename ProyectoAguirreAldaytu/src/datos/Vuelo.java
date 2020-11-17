@@ -60,6 +60,7 @@ public class Vuelo {
 		return "Vuelo [idAvion=" + idAvion + ", origen=" + origen + ", destino=" + destino + ", horaSalida="
 				+ horaSalida + ", horaLLegada=" + horaLLegada + "]";
 	}
+	//HOLA
 	
 
 }
