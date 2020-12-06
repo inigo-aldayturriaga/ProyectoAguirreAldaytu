@@ -14,6 +14,7 @@ public class VentanaAzafata extends JFrame {
     JSpinner spinDni;
     JLabel lresidencia;
     JTextField tResidencia;
+   
 	
 }
 
