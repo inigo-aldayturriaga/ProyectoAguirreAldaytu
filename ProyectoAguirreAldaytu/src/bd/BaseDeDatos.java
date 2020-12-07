@@ -29,8 +29,8 @@ public class BaseDeDatos {
 	public static Statement crearTablasBD( Connection con ) {
 		try {
 			Statement statement = con.createStatement();
-			statement.executeUpdate("create table Persona "+
-						   "(nombre string, "+
+			statement.executeUpdate("create table Pasajero "+
+						   "(idLog string, "+
 						   " contrasenia string)");
 			return statement;
 		} catch (SQLException e) {
@@ -45,7 +45,7 @@ public class BaseDeDatos {
 	public static Statement reiniciarBD( Connection con ) {
 		try {
 			Statement statement = con.createStatement();
-			statement.executeUpdate("drop table if exists Persona");
+			statement.executeUpdate("drop table if exists Pasajero");
 			return crearTablasBD( con );
 		} catch (SQLException e) {
 			return null;
@@ -66,9 +66,9 @@ public class BaseDeDatos {
 	/**
 	 * COMPROBACIONES CON LA TABLA PERSONA!
 	 */
-	public static boolean existeUsuario(String nombre) {
+	public static boolean existeUsuario(String idLog) {
 		boolean existeUsuario = false;
-		String sql = "SELECT * FROM Persona WHERE nombre ='"+nombre+"'";
+		String sql = "SELECT * FROM Pasajero WHERE idLog ='"+idLog+"'";
 		Connection con = inicializarBD("deustoAirport.db");
 		Statement st;
 		try {
@@ -86,13 +86,13 @@ public class BaseDeDatos {
 	
 	/**
 	 * 
-	 * @param nombre Nombre del usuario
+	 * @param idLog id para logearse del usuario
 	 * @param contrasenia contrasenia del usuario
 	 * @return
 	 */
-	public static int comprobarUsuario(String nombre, String contrasenia) {
+	public static int comprobarUsuario(String idLog, String contrasenia) {
 		int resultado = 0;
-		String s = "SELECT * FROM Persona WHERE nombre = '"+nombre+"'";
+		String s = "SELECT * FROM Pasajero WHERE idLog = '"+idLog+"'";
 		
 		Connection c = inicializarBD("deustoAirport.db");
 		try {
@@ -114,16 +114,15 @@ public class BaseDeDatos {
 		
 	}
 	
-	public static void insertarUsuario(String nombre, String contrasenia) {
+	public static void insertarUsuario(String idLog, String contrasenia) {
 		
-		String s = "INSERT INTO Persona VALUES('"+nombre+"','"+contrasenia+"')";
+		String s = "INSERT INTO Pasajero VALUES('"+idLog+"','"+contrasenia+"')";
 		Connection c = BaseDeDatos.inicializarBD("deustoAirport.db");
 		try {
 			Statement st = c.createStatement();
 			st.executeUpdate(s);
 			cerrarBD(c, st);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

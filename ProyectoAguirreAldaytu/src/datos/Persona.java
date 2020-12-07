@@ -7,7 +7,6 @@ public abstract class Persona {
 	int edad;//Edad de la persona
 	String dni;//DNI con la letra incluida
 	String residencia;//Lugar donde vive
-	String contrasenia;//Contrasenia del usuario para entrar en la app
 	
 	//Getters y setters
 	public String getNombre() {

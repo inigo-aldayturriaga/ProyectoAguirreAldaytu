@@ -93,6 +93,8 @@ public class VentanaLogin extends JFrame {
 					int resultado = BaseDeDatos.comprobarUsuario(nombre, contrasenia);
 					if(resultado == 0) {
 						JOptionPane.showMessageDialog(null, "Tienes que registrarte","ACCESO DENEGADO",JOptionPane.ERROR_MESSAGE);
+						lblNombre.setText("");
+						lblContrasenia.setText("");
 						String nombreUsuario = JOptionPane.showInputDialog("Introduce tu nombre: ");
 						while(BaseDeDatos.existeUsuario(nombreUsuario)) {
 							nombreUsuario = JOptionPane.showInputDialog("Ese nombre ya está ocupado, introduce otro: ");
@@ -101,10 +103,14 @@ public class VentanaLogin extends JFrame {
 						BaseDeDatos.insertarUsuario(nombreUsuario, contraseniaUsuario);
 					}else if (resultado == 1) {
 						JOptionPane.showMessageDialog(null, "La contraseña es incorrecta","ACCESO DENEGADO",JOptionPane.ERROR_MESSAGE);
+						lblNombre.setText("");
+						lblContrasenia.setText("");
 						ventana.dispose();
 						
 					}else {
 						JOptionPane.showMessageDialog(null, "BIENVENIDO","ACCESO PERMITIDO",JOptionPane.INFORMATION_MESSAGE);
+						lblNombre.setText("");
+						lblContrasenia.setText("");
 						ventana.dispose();
 					}	
 				}

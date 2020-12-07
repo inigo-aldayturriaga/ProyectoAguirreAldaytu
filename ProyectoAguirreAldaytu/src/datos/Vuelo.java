@@ -12,7 +12,7 @@ public class Vuelo {
 	int horaLLegada;//Hora de llegada del vuelo
 	int numeroPasajeros;//Cantidad de pasajeros que van en el vuelo
 	int maximoPasajeros;//Cantidad maxima de pasajeros de ese vuelo
-	ArrayList<Pasajero> pasajeros;//Lista de los pasajeros que van en el vuelo
+	ArrayList<Pasajero> listaPasajeros;//Lista de los pasajeros que van en el vuelo
 	
 	
 	//Getters y setters
@@ -60,18 +60,22 @@ public class Vuelo {
 		this.maximoPasajeros = maximoPasajeros;
 	}
 	
-	public ArrayList<Pasajero> getPasajeros() {
-		return pasajeros;
+	public ArrayList<Pasajero> getlistaPasajeros() {
+		return listaPasajeros;
 	}
-	public void setPasajeros(ArrayList<Pasajero> pasajeros) {
-		this.pasajeros = pasajeros;
+	public void setPasajeros(ArrayList<Pasajero> listaPasajeros) {
+		this.listaPasajeros = listaPasajeros;
 	}
 	@Override
 	public String toString() {
 		return "Vuelo [idAvion=" + idAvion + ", origen=" + origen + ", destino=" + destino + ", horaSalida="
 				+ horaSalida + ", horaLLegada=" + horaLLegada + ", numeroPasajeros=" + numeroPasajeros
-				+ ", maximoPasajeros=" + maximoPasajeros + ", pasajeros=" + pasajeros + "]";
+				+ ", maximoPasajeros=" + maximoPasajeros + ", pasajeros=" + listaPasajeros + "]";
+	}
+	public static void añadirPasajeros(Pasajero p,ArrayList<Pasajero> listaPasajeros) {
+		listaPasajeros.add(p);
+		
+		
 	}
 	
-
 }
