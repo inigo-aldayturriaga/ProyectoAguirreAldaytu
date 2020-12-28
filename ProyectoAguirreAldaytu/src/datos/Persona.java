@@ -7,6 +7,7 @@ public abstract class Persona {
 	int edad;//Edad de la persona
 	String dni;//DNI con la letra incluida
 	String residencia;//Lugar donde vive
+	String contrasenia;//Contraseña para entrar en la app y tendrá que dar su nombre
 	
 	//Getters y setters
 	public String getNombre() {
@@ -38,6 +39,13 @@ public abstract class Persona {
 	}
 	public void setResidencia(String residencia) {
 		this.residencia = residencia;
+	}
+	
+	public String getContrasenia() {
+		return contrasenia;
+	}
+	public void setContrasenia(String contrasenia) {
+		this.contrasenia = contrasenia;
 	}
 	@Override
 	public String toString() {

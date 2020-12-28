@@ -43,7 +43,6 @@ public class VentanaPrincipal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BaseDeDatos.inicializarBD("deustoAirport.db");
 					VentanaLogin vl = new VentanaLogin();
 					vl.setVisible(true);
 				}catch (Exception e){
