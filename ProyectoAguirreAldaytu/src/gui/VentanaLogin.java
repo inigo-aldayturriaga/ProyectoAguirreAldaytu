@@ -18,8 +18,8 @@ public class VentanaLogin extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public JLabel lblNombre,lblContrasenia;
-	public JTextField tfNombre,tfContrasenia;
+	public JLabel lblIdLog,lblContrasenia;
+	public JTextField tfIdLog,tfContrasenia;
 	public JButton bConfirmar,bRecuperarContrasenia,bBorrar;
 	public JPanel pNorte,pCentro,pSur;
 	
@@ -34,7 +34,7 @@ public class VentanaLogin extends JFrame {
 		/**
 		 * Inicializamos los labels
 		 */
-		lblNombre = new JLabel("Nombre: ");
+		lblIdLog = new JLabel("Nombre: ");
 		lblContrasenia = new JLabel("Contraseña: ");
 		/**
 		 * Inicializamos los paneles
@@ -46,7 +46,7 @@ public class VentanaLogin extends JFrame {
 		/**
 		 * Inicializamos los textfields
 		 */
-		tfNombre = new JTextField(5);
+		tfIdLog = new JTextField(5);
 		tfContrasenia = new JTextField(5);
 		/**
 		 * Inicializamos los botones
@@ -57,8 +57,8 @@ public class VentanaLogin extends JFrame {
 		/**
 		 * Añadimos los diferentes componentes al panel Centro
 		 */
-		pCentro.add(lblNombre);
-		pCentro.add(tfNombre);
+		pCentro.add(lblIdLog);
+		pCentro.add(tfIdLog);
 		pCentro.add(lblContrasenia);
 		pCentro.add(tfContrasenia);
 		/**
@@ -81,37 +81,40 @@ public class VentanaLogin extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String nombre = tfNombre.getText();
+				String idLog = tfIdLog.getText();
 				String contrasenia = tfContrasenia.getText();
 				/**
 				 * Si el nombre y la contrasenia es admin entraremos como administrador, sino en la variable resultado del metodo de la base de datos sabemos si no existe el usuario, si existe el usuario pero la contrasenia está mal o si lo ha metido bien
 				 */
-				if(nombre.equals("admin") && contrasenia.equals("admin")) {
+				if(idLog.equals("admin") && contrasenia.equals("admin")) {
 					new VentanaAdmin();
 					ventana.dispose();
+					new VentanaPrincipal();
+					
 				}else {
-					int resultado = BaseDeDatos.comprobarUsuario(nombre, contrasenia);
+					int resultado = BaseDeDatos.comprobarUsuario(idLog, contrasenia);
 					if(resultado == 0) {
 						JOptionPane.showMessageDialog(null, "Tienes que registrarte","ACCESO DENEGADO",JOptionPane.ERROR_MESSAGE);
-						lblNombre.setText("");
+						lblIdLog.setText("");
 						lblContrasenia.setText("");
-						String nombreUsuario = JOptionPane.showInputDialog("Introduce tu nombre: ");
-						while(BaseDeDatos.existeUsuario(nombreUsuario)) {
-							nombreUsuario = JOptionPane.showInputDialog("Ese nombre ya está ocupado, introduce otro: ");
+						String idLogin = JOptionPane.showInputDialog("Introduce tu ID: ");
+						while(BaseDeDatos.existeUsuario(idLogin)) {
+							idLogin = JOptionPane.showInputDialog("Ese nombre ya está ocupado, introduce otro nombre: ");
 						}
 						String contraseniaUsuario = JOptionPane.showInputDialog("Introduce una contraseña: ");
-						BaseDeDatos.insertarUsuario(nombreUsuario, contraseniaUsuario);
+						BaseDeDatos.insertarUsuario(idLogin, contraseniaUsuario);
 					}else if (resultado == 1) {
 						JOptionPane.showMessageDialog(null, "La contraseña es incorrecta","ACCESO DENEGADO",JOptionPane.ERROR_MESSAGE);
-						lblNombre.setText("");
+						lblIdLog.setText("");
 						lblContrasenia.setText("");
 						ventana.dispose();
 						
 					}else {
-						JOptionPane.showMessageDialog(null, "BIENVENIDO","ACCESO PERMITIDO",JOptionPane.INFORMATION_MESSAGE);
-						lblNombre.setText("");
+						JOptionPane.showMessageDialog(null, "BIENVENIDO","ACCESO CONCEDIDO",JOptionPane.INFORMATION_MESSAGE);
+						lblIdLog.setText("");
 						lblContrasenia.setText("");
 						ventana.dispose();
+						new VentanaPrincipal();
 					}	
 				}
 			}
@@ -121,7 +124,7 @@ public class VentanaLogin extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				tfNombre.setText("");
+				tfIdLog.setText("");
 				tfContrasenia.setText("");
 				
 			}
