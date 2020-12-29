@@ -3,23 +3,29 @@ package datos;
 import java.util.ArrayList;
 
 public class Azafata {
-	ArrayList<String> idiomas; //Idiomas en los que se expresa la azafata
+	int altura,peso;
 	
+	public Azafata() {
+		
+	}
+		
 	//Getters y setters
-	public ArrayList<String> getIdiomas() {
-		return idiomas;
+	public int getAltura() {
+		return altura;
 	}
 
-	public void setIdiomas(ArrayList<String> idiomas) {
-		this.idiomas = idiomas;
+	public void setAltura(int altura) {
+		this.altura = altura;
 	}
 
-	@Override
-	public String toString() {
-		return "Azafata [idiomas=" + idiomas + "]";
+	public int getPeso() {
+		return peso;
 	}
-	
-	
-	
 
+	public void setPeso(int peso) {
+		this.peso = peso;
+	}
+
+
+	
 }

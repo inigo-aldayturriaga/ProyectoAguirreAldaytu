@@ -1,6 +1,7 @@
 package bd;
 
 import datos.Persona;
+import datos.Vuelo;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -124,6 +125,12 @@ public class BaseDeDatos {
 			cerrarBD(c, st);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		
+	}
+	public static void añadirVuelos(ArrayList<Vuelo> al) {
+		for (Vuelo vuelo :  al) {
+			
 		}
 		
 	}
