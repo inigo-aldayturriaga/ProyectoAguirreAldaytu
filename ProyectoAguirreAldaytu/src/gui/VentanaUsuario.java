@@ -8,7 +8,8 @@ public class VentanaUsuario {
 	private DefaultTableModel modelo;
 	
 	public VentanaUsuario () {
-		
+		DefaultTableModel modelo = new DefaultTableModel();
+		JTable tabla = new JTable (modelo);
 	}
 
 }
