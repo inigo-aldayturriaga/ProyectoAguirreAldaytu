@@ -84,7 +84,7 @@ public class VentanaLogin extends JFrame {
 				String nombre = tfNombre.getText();
 				String contrasenia = tfContrasenia.getText();
 				/**
-				 * Si el nombre y la contrasenia es admin entraremos como administrador, sino en la variable resultado del metodo de la base de datos sabemos si no existe el usuario, si existe el usuario pero la contrasenia está mal o si lo ha metido bien
+				 * Si el nombre y la contrasenia es admin entraremos como administrador(trabajador de la aerolinea), sino en la variable resultado del metodo de la base de datos sabemos si no existe el usuario, si existe el usuario pero la contrasenia está mal o si lo ha metido bien
 				 */
 				if(nombre.equals("admin") && contrasenia.equals("admin")) {
 					new VentanaAdmin();
