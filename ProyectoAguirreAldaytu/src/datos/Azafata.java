@@ -2,7 +2,7 @@ package datos;
 
 import java.util.ArrayList;
 
-public class Azafata {
+public class Azafata implements Asignable {
 	int altura,peso;
 	
 	public Azafata() {
