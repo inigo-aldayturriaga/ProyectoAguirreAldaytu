@@ -38,6 +38,20 @@ public class BaseDeDatos {
 			return null;
 		}
 	}
+	public static Statement usarCrearTablasBD( Connection con ) {
+		try {
+			Statement statement = con.createStatement();
+			statement.executeUpdate("create table Vuelo "+
+						   "(idAvion string, "+
+						   " origen string, "+
+						   " destino string, "+
+						   " horaSalida int, "+
+						   " horaLLegada int )");
+				return statement;
+		} catch (SQLException e) {
+			return null;
+		}
+	}
 	
 	/** Reinicia en blanco las tablas de la base de datos. 
 	 * @param con	Conexión creada
@@ -126,12 +140,61 @@ public class BaseDeDatos {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+	/**
+	* COMPROBACIONES CON LA TABLA VUELOS!
+	*/
+	
 	}
 	public static void añadirVuelos(ArrayList<Vuelo> al) {
 		for (Vuelo vuelo :  al) {
 			
 		}
 		
+	}
+	public static ArrayList<Object[]> obtenerArrayDeVuelos(){
+		String sql = "SELECT * FROM Vuelo";
+		Connection con = inicializarBD("Vuelos.db");
+		Statement st = null;
+		ArrayList<Object[]> vuelos = new ArrayList<Object[]>();
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
+			while(rs.next()) {
+				String idAvion = rs.getString("dni");
+				String origen = rs.getString("origen");
+				String destino = rs.getString("destino");
+				int horaSalida = rs.getInt("hora de salida");
+				int horaLlegada = rs.getInt("hora de llegada");
+				Object[] fila = {idAvion,origen,destino,horaSalida,horaLlegada};
+				vuelos.add(fila);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				cerrarBD(con, st);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+		}		
+		return vuelos;		
+	}
+	
+	public static void modificarVuelo(String a, String b, String c, int d, int e) {
+		String sql = "UPDATE Vuelo SET idAvion='"+a+"',origen="+b+"',destino='"+c+"',horaSalida="+d.intValue()+",horaLlegada="+e.intValue()";
+		Connection con = inicializarBD("Vuelos.db");
+		try {
+			Statement st = con.createStatement();
+			st.executeUpdate(sql);
+			cerrarBD(con, st);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 }
