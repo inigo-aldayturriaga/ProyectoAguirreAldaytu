@@ -26,7 +26,7 @@ public class VentanaAsignaciones extends JFrame {
 	
 	
 	
-	public VentanaAsignaciones(DeustoAir deustoAir) {
+	public VentanaAsignaciones() {
 		setLayout(new GridLayout(1, 3));
 		
 		JPanel izquierda = new JPanel(); 
@@ -50,7 +50,7 @@ public class VentanaAsignaciones extends JFrame {
 		
 		Asignable tripulante = (Asignable) comboTripulacion.getSelectedItem();
 		
-		ArrayList<Pasajero> pacientesAsignados = deustoAir.getAsignaciones().get(tripulante);
+		ArrayList<Pasajero> pacientesAsignados = DeustoAir.getAsignaciones().get(tripulante);
 		
 		modeloAsignados.clear();
 		if (pasajerosAsignados != null) {

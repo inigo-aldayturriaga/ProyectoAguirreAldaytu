@@ -10,6 +10,8 @@ public class Vuelo {
 	String idAvion;//Identificador del avion
 	String origen;//Lugar de origen del vuelo
 	String destino;//Lugar de destino del vuelo
+	int puerta;//Puerta de embarque
+	String observacion;//Si es llamada ultima llamada retraso etc
 	Date horaSalida;//Hora de salida del vuelo
 	Date horaLLegada;//Hora de llegada del vuelo
 	ArrayList<Persona> listaPersonas;//Lista de toda la gente que va en el vuelo
@@ -80,9 +82,26 @@ public class Vuelo {
 	public void setListaPersonas(ArrayList<Persona> listaPersonas) {
 		this.listaPersonas = listaPersonas;
 	}
+	
+
+	public int getPuerta() {
+		return puerta;
+	}
+
+	public void setPuerta(int puerta) {
+		this.puerta = puerta;
+	}
+
+	public String getObservacion() {
+		return observacion;
+	}
+
+	public void setObservacion(String observacion) {
+		this.observacion = observacion;
+	}
 
 	public Vuelo(String idAvion, String origen, String destino, Date horaSalida, Date horaLLegada,
-			ArrayList<Persona> listaPersonas) {
+			ArrayList<Persona> listaPersonas,String observacion,int puerta) {
 		super();
 		this.idAvion = idAvion;
 		this.origen = origen;
@@ -90,6 +109,8 @@ public class Vuelo {
 		this.horaSalida = horaSalida;
 		this.horaLLegada = horaLLegada;
 		this.listaPersonas = listaPersonas;
+		this.observacion = observacion;
+		this.puerta = puerta;
 	}
 	
 	

@@ -4,6 +4,7 @@ import datos.Persona;
 import datos.Vuelo;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class BaseDeDatos {
@@ -12,6 +13,8 @@ public class BaseDeDatos {
 	 * @param nombreBD	Nombre de fichero de bd
 	 * @return	Conexión con la base de datos indicada
 	 */
+	public static Connection con;
+	public static Statement st;
 	
 	public static Connection inicializarBD( String nombreBD ) {
 		try {
@@ -29,25 +32,26 @@ public class BaseDeDatos {
 	 */
 	public static Statement crearTablasBD( Connection con ) {
 		try {
-			Statement statement = con.createStatement();
-			statement.executeUpdate("create table Persona "+
+			st = con.createStatement();
+			st.executeUpdate("create table Persona "+
 						   "(nombre string, "+
 						   " contrasenia string)");
-			return statement;
+			return st;
 		} catch (SQLException e) {
 			return null;
 		}
 	}
 	public static Statement usarCrearTablasBD( Connection con ) {
 		try {
-			Statement statement = con.createStatement();
-			statement.executeUpdate("create table Vuelo "+
-						   "(idAvion string, "+
-						   " origen string, "+
+			st = con.createStatement();
+			st.executeUpdate("create table Vuelo "+
+						   "(horaSalida string, "+
+						   " idAvion string, "+
 						   " destino string, "+
-						   " horaSalida int, "+
-						   " horaLLegada int )");
-				return statement;
+						   " horaLLegada string, "+
+						   " puerta string, "+
+						   "observacion string)");
+				return st;
 		} catch (SQLException e) {
 			return null;
 		}
@@ -59,8 +63,8 @@ public class BaseDeDatos {
 	 */
 	public static Statement reiniciarBD( Connection con ) {
 		try {
-			Statement statement = con.createStatement();
-			statement.executeUpdate("drop table if exists Persona");
+			st = con.createStatement();
+			st.executeUpdate("drop table if exists Persona");
 			return crearTablasBD( con );
 		} catch (SQLException e) {
 			return null;
@@ -78,14 +82,19 @@ public class BaseDeDatos {
 		} catch (SQLException e) {
 		}
 	}
+	public static void cerrarCBD(Connection con) {
+		try {
+			if (con!=null) con.close();
+		} catch (SQLException e) {
+		}
+	}
 	/**
 	 * COMPROBACIONES CON LA TABLA PERSONA!
 	 */
 	public static boolean existeUsuario(String nombre) {
 		boolean existeUsuario = false;
 		String sql = "SELECT * FROM Persona WHERE nombre ='"+nombre+"'";
-		Connection con = inicializarBD("deustoAirport.db");
-		Statement st;
+		con = inicializarBD("deustoAirport.db");
 		try {
 			st = con.createStatement(); 
 			ResultSet rs = st.executeQuery(sql); 
@@ -109,9 +118,9 @@ public class BaseDeDatos {
 		int resultado = 0;
 		String s = "SELECT * FROM Persona WHERE nombre = '"+nombre+"'";
 		
-		Connection c = inicializarBD("deustoAirport.db");
+		con = inicializarBD("deustoAirport.db");
 		try {
-			Statement st = c.createStatement();
+			st = con.createStatement();
 			ResultSet rs = st.executeQuery(s);
 			if(rs.next()) { 
 				String contrasenia2 = rs.getString("contrasenia");
@@ -120,7 +129,7 @@ public class BaseDeDatos {
 				else
 					resultado = 1;
 			}
-			cerrarBD(c, st);
+			cerrarBD(con, st);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -128,46 +137,58 @@ public class BaseDeDatos {
 		return resultado;
 		
 	}
-	
+	/**
+	 * Metodo para insertar personas que se pueden logear
+	 */
 	public static void insertarUsuario(String nombre, String contrasenia) {
 		
 		String s = "INSERT INTO Persona VALUES('"+nombre+"','"+contrasenia+"')";
-		Connection c = BaseDeDatos.inicializarBD("deustoAirport.db");
+		con = BaseDeDatos.inicializarBD("deustoAirport.db");
 		try {
-			Statement st = c.createStatement();
+			st = con.createStatement();
 			st.executeUpdate(s);
-			cerrarBD(c, st);
+			cerrarBD(con, st);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	/**
-	* COMPROBACIONES CON LA TABLA VUELOS!
+	* Metodo para insertar vuelos en la base de datos
 	*/
-	
 	}
-	public static void añadirVuelos(ArrayList<Vuelo> al) {
-		for (Vuelo vuelo :  al) {
-			
+	public static void insertarVuelo(Vuelo v) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy hh:mm aaa");
+		String s = "INSERT INTO Vuelo VALUES('"+sdf.format(v.getHoraSalida())+"','"+v.getIdAvion()+"','"+v.getDestino()+"','"+sdf.format(v.getHoraLLegada())+"',"+v.getPuerta()+",'"+v.getObservacion()+"')";
+		con = inicializarBD("deustoAirport.db");
+		try {
+			st = con.createStatement();
+			st.executeUpdate(s);
+			cerrarBD(con, st);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 	}
-	public static ArrayList<Object[]> obtenerArrayDeVuelos(){
+	
+	public static ArrayList<Vuelo> obtenerArrayDeVuelos(){
 		String sql = "SELECT * FROM Vuelo";
-		Connection con = inicializarBD("Vuelos.db");
-		Statement st = null;
-		ArrayList<Object[]> vuelos = new ArrayList<Object[]>();
+		con = inicializarBD("deustoAirport.db");		
+		ArrayList<Vuelo> vuelos = new ArrayList<Vuelo>();
 		ResultSet rs = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy hh:mm aaa");
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery(sql);
 			while(rs.next()) {
-				String idAvion = rs.getString("dni");
-				String origen = rs.getString("origen");
+				String horaSalida = sdf.format(rs.getString("horaSalida"));
+				String idAvion = rs.getString("idAvion");
 				String destino = rs.getString("destino");
-				int horaSalida = rs.getInt("hora de salida");
-				int horaLlegada = rs.getInt("hora de llegada");
-				Object[] fila = {idAvion,origen,destino,horaSalida,horaLlegada};
-				vuelos.add(fila);
+				String horaLlegada = sdf.format(rs.getString("horaLlegada"));
+				int puerta = rs.getInt("puerta");	
+				String observacion = rs.getString("observacion");
+
+				Vuelo v1 = new Vuelo(idAvion, null, destino, Date.valueOf(horaSalida),Date.valueOf(horaLlegada), null,observacion,puerta);
+				vuelos.add(v1);
 			}
 			
 		} catch (SQLException e) {
@@ -176,6 +197,7 @@ public class BaseDeDatos {
 		} finally {
 			try {
 				rs.close();
+				st.close();
 				cerrarBD(con, st);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -185,15 +207,14 @@ public class BaseDeDatos {
 		return vuelos;		
 	}
 	
-	public static void modificarVuelo(String a, String b, String c, int d, int e) {
-		String sql = "UPDATE Vuelo SET idAvion='"+a+"',origen="+b+"',destino='"+c+"',horaSalida="+d.intValue()+",horaLlegada="+e.intValue()";
-		Connection con = inicializarBD("Vuelos.db");
+	public static void modificarVuelo(String a, String b, String c, String d, String e) {
+		String sql = "UPDATE Vuelo SET idAvion='"+a+"',origen="+b+"',destino='"+c+"',horaSalida="+d+",horaLlegada="+e;     
+		con = inicializarBD("deustoAirport.db");
 		try {
-			Statement st = con.createStatement();
+			st = con.createStatement();
 			st.executeUpdate(sql);
 			cerrarBD(con, st);
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}

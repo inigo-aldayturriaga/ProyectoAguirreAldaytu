@@ -114,7 +114,7 @@ public class VentanaLogin extends JFrame {
 						lblNombre.setText("");
 						lblContrasenia.setText("");
 						ventana.dispose();
-						new VentanaPrincipal();
+						new VentanaUsuario();
 					}	
 				}
 			}
