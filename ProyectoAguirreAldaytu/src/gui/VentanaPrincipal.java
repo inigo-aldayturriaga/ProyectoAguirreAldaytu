@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import bd.BaseDeDatos;
+import datos.DeustoAir;
 
 
 public class VentanaPrincipal extends JFrame {
@@ -44,6 +45,7 @@ public class VentanaPrincipal extends JFrame {
 			public void run() {
 				try {
 					VentanaLogin vl = new VentanaLogin();
+					DeustoAir da = new DeustoAir();
 					vl.setVisible(true);
 				}catch (Exception e){
 					e.printStackTrace();	

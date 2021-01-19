@@ -3,6 +3,7 @@ package bd;
 import datos.Persona;
 import datos.Vuelo;
 
+import java.io.ObjectInputStream.GetField;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,10 +46,10 @@ public class BaseDeDatos {
 		try {
 			st = con.createStatement();
 			st.executeUpdate("create table Vuelo "+
-						   "(horaSalida string, "+
+						   "(horaSalida bigint, "+
 						   " idAvion string, "+
 						   " destino string, "+
-						   " horaLLegada string, "+
+						   " horaLLegada bigint, "+
 						   " puerta int, "+
 						   "observacion string)");
 				return st;
@@ -65,6 +66,15 @@ public class BaseDeDatos {
 		try {
 			st = con.createStatement();
 			st.executeUpdate("drop table if exists Persona");
+			return crearTablasBD( con );
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+	public static Statement reiniciarBDVuelo( Connection con ) {
+		try {
+			st = con.createStatement();
+			st.executeUpdate("drop table if exists Vuelo");
 			return crearTablasBD( con );
 		} catch (SQLException e) {
 			return null;
@@ -157,14 +167,13 @@ public class BaseDeDatos {
 	}
 	public static void insertarVuelo(Vuelo v) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy hh:mm aaa");
-		String s = "INSERT INTO Vuelo VALUES('"+sdf.format(v.getHoraSalida())+"','"+v.getIdAvion()+"','"+v.getDestino()+"','"+sdf.format(v.getHoraLLegada())+"',"+v.getPuerta()+",'"+v.getObservacion()+"')";
+		String s = "INSERT INTO Vuelo VALUES("+v.getHoraSalida().getTime()+",'"+v.getIdAvion()+"','"+v.getDestino()+"',"+v.getHoraLLegada().getTime()+","+v.getPuerta()+",'"+v.getObservacion()+"')";
 		con = inicializarBD("deustoAirport.db");
 		try {
 			st = con.createStatement();
 			st.executeUpdate(s);
 			cerrarBD(con, st);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -180,14 +189,15 @@ public class BaseDeDatos {
 			st = con.createStatement();
 			rs = st.executeQuery(sql);
 			while(rs.next()) {
-				String horaSalida = sdf.format(rs.getString("horaSalida"));
+				Date d1 = new Date(rs.getLong("horaSalida"));
+				Date horaSalida = new Date(rs.getLong("horaSalida"));
 				String idAvion = rs.getString("idAvion");
 				String destino = rs.getString("destino");
-				String horaLlegada = sdf.format(rs.getString("horaLlegada"));
+				Date horaLlegada = new Date(rs.getLong("horaLlegada"));
 				int puerta = rs.getInt("puerta");	
 				String observacion = rs.getString("observacion");
 
-				Vuelo v1 = new Vuelo(idAvion, null, destino, Date.valueOf(horaSalida),Date.valueOf(horaLlegada), null,observacion,puerta);
+				Vuelo v1 = new Vuelo(idAvion, null, destino, horaSalida,horaLlegada, null,observacion,puerta);
 				vuelos.add(v1);
 			}
 			

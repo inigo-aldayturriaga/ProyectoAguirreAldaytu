@@ -12,16 +12,22 @@ public class DeustoAir {
 	 */
 	
 	public DeustoAir() {
-		ArrayList<Persona> al = new ArrayList<Persona>();
-		Persona p1 = new Pasajero();
-		al.add(p1);
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy hh:mm aaa"); // El formato de fecha está especificado 
-	    Date d1 = (Date) new java.util.Date(2021,1,18,16,36);
-	    Date d2 = (Date) new java.util.Date(2021,1,18,18,36);
-		Vuelo v1 = new Vuelo("XLX162", "Bilbao", "Madrid", d1,d2,al, "Llamada", 2);
 		BaseDeDatos.con = BaseDeDatos.inicializarBD("deustoAirport.db");
+		BaseDeDatos.crearTablasBD(BaseDeDatos.con);
+		BaseDeDatos.reiniciarBDVuelo(BaseDeDatos.con);
+		BaseDeDatos.usarCrearTablasBD(BaseDeDatos.con);
+		ArrayList<Persona> al1 = new ArrayList<Persona>();
+		Persona p1 = new Pasajero();
+		al1.add(p1);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy hh:mm aaa"); // El formato de fecha está especificado 
+	    Date d1 = new Date(55432524);
+	    Date d2 = new Date(5423542);
+		Vuelo v1 = new Vuelo("XLX162", "Bilbao", "Madrid", d1,d2,al1, "Llamada", 2);
 		BaseDeDatos.insertarVuelo(v1);
-		BaseDeDatos.cerrarBD(BaseDeDatos.con, BaseDeDatos.st);
+		ArrayList<Vuelo> al = BaseDeDatos.obtenerArrayDeVuelos();
+		for (Vuelo v : al) {
+			System.out.println(v.toString());
+		}
 		
 	}
 

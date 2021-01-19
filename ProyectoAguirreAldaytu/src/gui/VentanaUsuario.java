@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 import bd.BaseDeDatos;
 import datos.Vuelo;
