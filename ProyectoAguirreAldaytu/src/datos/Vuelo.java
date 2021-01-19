@@ -112,6 +112,78 @@ public class Vuelo {
 		this.observacion = observacion;
 		this.puerta = puerta;
 	}
+
+	@Override
+	public String toString() {
+		return "Vuelo [idAvion=" + idAvion + ", origen=" + origen + ", destino=" + destino + ", puerta=" + puerta
+				+ ", observacion=" + observacion + ", horaSalida=" + horaSalida + ", horaLLegada=" + horaLLegada
+				+ ", listaPersonas=" + listaPersonas + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((destino == null) ? 0 : destino.hashCode());
+		result = prime * result + ((horaLLegada == null) ? 0 : horaLLegada.hashCode());
+		result = prime * result + ((horaSalida == null) ? 0 : horaSalida.hashCode());
+		result = prime * result + ((idAvion == null) ? 0 : idAvion.hashCode());
+		result = prime * result + ((listaPersonas == null) ? 0 : listaPersonas.hashCode());
+		result = prime * result + ((observacion == null) ? 0 : observacion.hashCode());
+		result = prime * result + ((origen == null) ? 0 : origen.hashCode());
+		result = prime * result + puerta;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Vuelo other = (Vuelo) obj;
+		if (destino == null) {
+			if (other.destino != null)
+				return false;
+		} else if (!destino.equals(other.destino))
+			return false;
+		if (horaLLegada == null) {
+			if (other.horaLLegada != null)
+				return false;
+		} else if (!horaLLegada.equals(other.horaLLegada))
+			return false;
+		if (horaSalida == null) {
+			if (other.horaSalida != null)
+				return false;
+		} else if (!horaSalida.equals(other.horaSalida))
+			return false;
+		if (idAvion == null) {
+			if (other.idAvion != null)
+				return false;
+		} else if (!idAvion.equals(other.idAvion))
+			return false;
+		if (listaPersonas == null) {
+			if (other.listaPersonas != null)
+				return false;
+		} else if (!listaPersonas.equals(other.listaPersonas))
+			return false;
+		if (observacion == null) {
+			if (other.observacion != null)
+				return false;
+		} else if (!observacion.equals(other.observacion))
+			return false;
+		if (origen == null) {
+			if (other.origen != null)
+				return false;
+		} else if (!origen.equals(other.origen))
+			return false;
+		if (puerta != other.puerta)
+			return false;
+		return true;
+	}
+	
 	
 	
 }

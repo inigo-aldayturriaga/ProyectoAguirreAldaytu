@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+
 import bd.BaseDeDatos;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -31,11 +33,15 @@ public class VentanaLogin extends JFrame {
 		ventana.setBounds(0,0,600,400);
 		ventana.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		ventana.setTitle("VENTANA LOGIN");
+		Color color1 = new Color(48, 163, 255);
+		Color color2 = new Color(14,105,179);
 		/**
 		 * Inicializamos los labels
 		 */
-		lblNombre = new JLabel("Nombre: ");
-		lblContrasenia = new JLabel("Contraseña: ");
+		lblNombre = new JLabel("        Nombre: ");
+		lblNombre.setForeground(Color.WHITE);
+		lblContrasenia = new JLabel("      Contraseña: ");
+		lblContrasenia.setForeground(Color.WHITE);
 		/**
 		 * Inicializamos los paneles
 		 */
@@ -52,8 +58,14 @@ public class VentanaLogin extends JFrame {
 		 * Inicializamos los botones
 		 */
 		bConfirmar = new JButton("CONFIRMAR");
+		bConfirmar.setForeground(Color.WHITE);
+		bConfirmar.setBackground(color2);
 		bRecuperarContrasenia = new JButton("¿Has olvidado tu contraseña?");
+		bRecuperarContrasenia.setForeground(Color.WHITE);
+		bRecuperarContrasenia.setBackground(color2);
 		bBorrar = new JButton("BORRAR");
+		bBorrar.setForeground(Color.WHITE);
+		bBorrar.setBackground(color2);
 		/**
 		 * Añadimos los diferentes componentes al panel Centro
 		 */
@@ -61,6 +73,9 @@ public class VentanaLogin extends JFrame {
 		pCentro.add(tfNombre);
 		pCentro.add(lblContrasenia);
 		pCentro.add(tfContrasenia);
+		pCentro.setBackground(color1);
+		pSur.setBackground(color1);
+		pNorte.setBackground(color1);
 		/**
 		 * Añadimos los botones al panel sur (botonera)
 		 */
@@ -87,7 +102,6 @@ public class VentanaLogin extends JFrame {
 				 * Si el nombre y la contrasenia es admin entraremos como administrador(trabajador de la aerolinea), sino en la variable resultado del metodo de la base de datos sabemos si no existe el usuario, si existe el usuario pero la contrasenia está mal o si lo ha metido bien
 				 */
 				if(nombre.equals("admin") && contrasenia.equals("admin")) {
-					new VentanaAdmin();
 					ventana.dispose();
 					new VentanaPrincipal();
 					

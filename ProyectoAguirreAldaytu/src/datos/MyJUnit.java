@@ -11,6 +11,9 @@ public class MyJUnit {
 
 	@Test
 	public void test() {
+		/**
+		 * Comprobacion de que se añaden bien los objetos a un arraylist
+		 */
 		ArrayList<Pasajero> listaPasajeros = new ArrayList<Pasajero>();
 		Pasajero p = new Pasajero();
 		listaPasajeros.add(p);
@@ -18,6 +21,8 @@ public class MyJUnit {
 		listaPasajeros.add(p);
 		listaPasajeros.add(p);
 		assertTrue(listaPasajeros.size()==4);
+		
+		
 	}
 
 }

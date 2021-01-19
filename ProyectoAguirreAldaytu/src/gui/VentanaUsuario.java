@@ -40,7 +40,6 @@ public class VentanaUsuario extends JFrame {
 		modeloVuelos.setColumnIdentifiers(cabeceras);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy hh:mm aaa");
 		for (Vuelo v : al) {
-			System.out.println(("gOLAFA"));
 			String[] fila = {sdf.format(v.getHoraSalida()),v.getIdAvion(),v.getDestino(),sdf.format(v.getHoraLLegada()),String.valueOf(v.getPuerta()),v.getObservacion()};
 			modeloVuelos.addRow(fila);
 		}

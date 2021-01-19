@@ -49,7 +49,7 @@ public class BaseDeDatos {
 						   " idAvion string, "+
 						   " destino string, "+
 						   " horaLLegada string, "+
-						   " puerta string, "+
+						   " puerta int, "+
 						   "observacion string)");
 				return st;
 		} catch (SQLException e) {
