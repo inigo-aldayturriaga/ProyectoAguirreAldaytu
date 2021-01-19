@@ -6,9 +6,15 @@ public abstract class Persona {
 	String apellido;//Primer apellido de la persona
 	int edad;//Edad de la persona
 	String dni;//DNI con la letra incluida
-	String residencia;//Lugar donde vive
-	String contrasenia;//Contraseña para entrar en la app y tendrá que dar su nombre
+
 	
+	public Persona(String nombre, String apellido, int edad, String dni) {
+		super();
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.edad = edad;
+		this.dni = dni;
+	}
 	//Getters y setters
 	public String getNombre() {
 		return nombre;
@@ -34,23 +40,9 @@ public abstract class Persona {
 	public void setDni(String dni) {
 		this.dni = dni;
 	}
-	public String getResidencia() {
-		return residencia;
-	}
-	public void setResidencia(String residencia) {
-		this.residencia = residencia;
-	}
-	
-	public String getContrasenia() {
-		return contrasenia;
-	}
-	public void setContrasenia(String contrasenia) {
-		this.contrasenia = contrasenia;
-	}
 	@Override
 	public String toString() {
-		return "Persona [nombre=" + nombre + ", apellido=" + apellido + ", edad=" + edad + ", dni=" + dni
-				+ ", residencia=" + residencia + "]";
+		return "Persona [nombre=" + nombre + ", apellido=" + apellido + ", edad=" + edad + ", dni=" + dni+ "]";
 	}
 	
 

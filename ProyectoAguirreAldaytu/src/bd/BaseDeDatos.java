@@ -1,6 +1,9 @@
 package bd;
 
+import datos.Azafata;
 import datos.Persona;
+import datos.Piloto;
+import datos.Tripulacion;
 import datos.Vuelo;
 
 import java.io.ObjectInputStream.GetField;
@@ -42,7 +45,7 @@ public class BaseDeDatos {
 			return null;
 		}
 	}
-	public static Statement usarCrearTablasBD( Connection con ) {
+	public static Statement crearTablaVueloBD( Connection con ) {
 		try {
 			st = con.createStatement();
 			st.executeUpdate("create table Vuelo "+
@@ -52,6 +55,38 @@ public class BaseDeDatos {
 						   " horaLLegada bigint, "+
 						   " puerta int, "+
 						   "observacion string)");
+				return st;
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+	public static Statement crearTablaPasajeroBD( Connection con ) {
+		try {
+			st = con.createStatement();
+			st.executeUpdate("create table Pasajero "+
+						   "(horaSalida bigint, "+
+						   " idAvion string, "+
+						   " destino string, "+
+						   " horaLLegada bigint, "+
+						   " puerta int, "+
+						   "observacion string)");
+				return st;
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+	public static Statement crearTablaTripulacionBD( Connection con ) {
+		try {
+			st = con.createStatement();
+			st.executeUpdate("create table Tripulacion "+
+						   "tipoTripulacion int, "+
+						   "(nombre string ,"+
+						   "apellido string, "+
+						   "edad int, "+
+						   "dni string"+
+						   "nacionalidad string"+
+						   "anyosExp int, "+
+						   "vuelosRealizados int)");
 				return st;
 		} catch (SQLException e) {
 			return null;
@@ -166,8 +201,19 @@ public class BaseDeDatos {
 	*/
 	}
 	public static void insertarVuelo(Vuelo v) {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy hh:mm aaa");
 		String s = "INSERT INTO Vuelo VALUES("+v.getHoraSalida().getTime()+",'"+v.getIdAvion()+"','"+v.getDestino()+"',"+v.getHoraLLegada().getTime()+","+v.getPuerta()+",'"+v.getObservacion()+"')";
+		con = inicializarBD("deustoAirport.db");
+		try {
+			st = con.createStatement();
+			st.executeUpdate(s);
+			cerrarBD(con, st);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	public static void insertarTripulacion(Tripulacion t) {
+		String s = "INSERT INTO Vuelo VALUES("+t.getTipoTripulacion()+",'"+t.getNombre()+"','"+t.getApellido()+"',"+t.getEdad()+",'"+t.getDni()+"','"+t.getNacionalidad()+"',"+t.getAnyosExperiencia()+","+t.getVuelosRealizados();    
 		con = inicializarBD("deustoAirport.db");
 		try {
 			st = con.createStatement();
@@ -184,7 +230,6 @@ public class BaseDeDatos {
 		con = inicializarBD("deustoAirport.db");		
 		ArrayList<Vuelo> vuelos = new ArrayList<Vuelo>();
 		ResultSet rs = null;
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy hh:mm aaa");
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery(sql);
@@ -197,7 +242,7 @@ public class BaseDeDatos {
 				int puerta = rs.getInt("puerta");	
 				String observacion = rs.getString("observacion");
 
-				Vuelo v1 = new Vuelo(idAvion, null, destino, horaSalida,horaLlegada, null,observacion,puerta);
+				Vuelo v1 = new Vuelo(idAvion, null, destino, horaSalida,horaLlegada, null,null,observacion,puerta);
 				vuelos.add(v1);
 			}
 			
@@ -215,6 +260,50 @@ public class BaseDeDatos {
 			}			
 		}		
 		return vuelos;		
+	}
+	public static ArrayList<Tripulacion> obtenerArrayDeTripulacion(){
+		String sql = "SELECT * FROM Tripulacion";
+		con = inicializarBD("deustoAirport.db");		
+		ArrayList<Tripulacion> tripulacion = new ArrayList<Tripulacion>();
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
+			while(rs.next()) {
+				int tipoTripulacion = rs.getInt("tipoTripulacion");
+				String nombre = rs.getString("nombre");
+				String apellido = rs.getString("apellido");
+				int edad = rs.getInt("edad");
+				String dni = rs.getString("dni");
+				String nacionalidad = rs.getString("nacionalidad");
+				int anyosExperiencia = rs.getInt("anyosExp");
+				int vuelosRealizados = rs.getInt("vuelosRealizados");
+				if (tipoTripulacion == 0) {
+					Tripulacion t1 = new Piloto(nombre, apellido, edad, dni, anyosExperiencia, vuelosRealizados, nacionalidad, tipoTripulacion,null);
+					tripulacion.add(t1);
+				}else {
+					//Tripulacion t2 = new Azafata(nombre, apellido, edad, dni, anyosExperiencia, vuelosRealizados, nacionalidad, tipoTripulacion, null,null);
+					//tripulacion.add(t2);
+				}
+				
+				
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				st.close();
+				cerrarBD(con, st);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+		}		
+		return tripulacion;		
 	}
 	
 	public static void modificarVuelo(String a, String b, String c, String d, String e) {

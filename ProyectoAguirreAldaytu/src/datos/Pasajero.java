@@ -4,6 +4,14 @@ public class Pasajero extends Persona {
 	ClasePasajero clase;//A partir de la enumeracion ClasePasajero, la clase del pasajero
 	String contrasenia;//Contrasenia del usuario para entrar en la app
 	
+
+	public Pasajero(String nombre, String apellido, int edad, String dni) {
+		super(nombre, apellido, edad, dni);
+		this.numeroBillete = numeroBillete;
+		this.clase = clase;
+		this.contrasenia = contrasenia;
+		
+	}
 	//Getters y setters
 	public int getNumeroBillete() {
 		return numeroBillete;
@@ -27,10 +35,12 @@ public class Pasajero extends Persona {
 		this.clase = clase;
 	}
 	
+	
 	@Override
 	public String toString() {
 		return "Pasajero [numeroBillete=" + numeroBillete + "]";
 	}
+	
 	
 	
 

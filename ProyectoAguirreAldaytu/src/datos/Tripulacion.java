@@ -5,22 +5,36 @@ import java.util.ArrayList;
 public abstract class Tripulacion extends Persona {
 	int anyosExperiencia;//Años que lleva volando cada tripulante
 	int vuelosRealizados;//Numero de vuelos realizados por cada tripulante
-	ArrayList<String> idiomas; //Idiomas en los que se expresa el tripulante
-	String nacionaldidad;
+	String nacionalidad;
+	int tipoTripulacion;//Si es 0 es piloto si es 1 es azafata
 	
 
-
-	public Tripulacion() {
-		
+	
+	public Tripulacion(String nombre, String apellido, int edad, String dni,int anyosExperiencia,int vuelosRealizados,String nacionalidad,int tipoTripulacion) {
+		super(nombre, apellido, edad, dni);
+		this.anyosExperiencia = anyosExperiencia;
+		this.vuelosRealizados = vuelosRealizados;
+		this.nacionalidad = nacionalidad;
+		this.tipoTripulacion = tipoTripulacion;
 	}
-	
-	
-	public String getNacionaldidad() {
-		return nacionaldidad;
+
+
+	public int getTipoTripulacion() {
+		return tipoTripulacion;
+	}
+
+
+	public void setTipoTripulacion(int tipoTripulacion) {
+		this.tipoTripulacion = tipoTripulacion;
+	}
+
+
+	public String getNacionalidad() {
+		return nacionalidad;
 	}
 
 	public void setNacionaldidad(String nacionaldidad) {
-		this.nacionaldidad = nacionaldidad;
+		this.nacionalidad = nacionaldidad;
 	}
 	public int getAnyosExperiencia() {
 		return anyosExperiencia;
@@ -34,12 +48,7 @@ public abstract class Tripulacion extends Persona {
 	public void setVuelosRealizados(int vuelosRealizados) {
 		this.vuelosRealizados = vuelosRealizados;
 	}
-	public ArrayList<String> getIdiomas() {
-		return idiomas;
-	}
-	public void setIdiomas(ArrayList<String> idiomas) {
-		this.idiomas = idiomas;
-	}
+	
 	
 }
 
