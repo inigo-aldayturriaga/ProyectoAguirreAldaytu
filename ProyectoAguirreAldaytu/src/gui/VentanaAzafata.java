@@ -83,23 +83,20 @@ public class VentanaAzafata extends JFrame {
 				//si ya hay un jugador hecho cogera los atributos de ese jugador, sino creara un nuevo jugador
 				if (azafata != null) {
 					nueva = azafata;
-				} else {
-					nueva = new Azafata();
+					nueva.setNombre(tnombre.getText());
+					nueva.setApellido(tapellido.getText());
+					nueva.setEdad((Integer) spinEdad.getValue());
+					nueva.setDni(tdni.getText());
+					nueva.setAnyosExperiencia((Integer) spinAnyosExperiencia.getValue());
+					nueva.setVuelosRealizados((Integer) spinVuelosRealizados.getValue());
+					nueva.setNacionaldidad(tnacionalidad.getText());
+					nueva.setAltura((Integer) spinAltura.getValue());
+					nueva.setPeso((Integer) spinPeso.getValue());
+				
+				
+				
+				
 				}
-				//aqui daremos los atributos del nuevo jugador que hayamos creado
-				nueva.setNombre(tnombre.getText());
-				nueva.setApellido(tapellido.getText());
-				nueva.setEdad((Integer) spinEdad.getValue());
-				nueva.setDni(tdni.getText());
-				nueva.setAnyosExperiencia((Integer) spinAnyosExperiencia.getValue());
-				nueva.setVuelosRealizados((Integer) spinVuelosRealizados.getValue());
-				nueva.setNacionaldidad(tnacionalidad.getText());
-				nueva.setAltura((Integer) spinAltura.getValue());
-				nueva.setPeso((Integer) spinPeso.getValue());
-				
-				
-				
-				
 			}
 		});
 

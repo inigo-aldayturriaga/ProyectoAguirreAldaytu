@@ -9,6 +9,7 @@ public class Piloto extends Tripulacion{
 		super(nombre, apellido, edad, dni, anyosExperiencia, vuelosRealizados, nacionalidad, tipoTripulacion);
 		this.tipo = tipo;
 	}
+	
 	public TipoPiloto getTipo() {
 		return tipo;
 	}

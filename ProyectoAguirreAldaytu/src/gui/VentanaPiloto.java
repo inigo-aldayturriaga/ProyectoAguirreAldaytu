@@ -78,29 +78,23 @@ public class VentanaPiloto extends JFrame {
 			}
 		});
 		crear.addActionListener(new ActionListener() {
-			
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Piloto nuevoPiloto;
 				
 				if (piloto != null) {
 					nuevoPiloto = piloto;
-				} else {
-					nuevoPiloto = new Piloto();
+					nuevoPiloto.setNombre(tnombre.getText());
+					nuevoPiloto.setApellido(tapellido.getText());
+					nuevoPiloto.setEdad((Integer) spinEdad.getValue());
+					nuevoPiloto.setDni(tdni.getText());
+					nuevoPiloto.setAnyosExperiencia((Integer) spinAnyosExperiencia.getValue());
+					nuevoPiloto.setVuelosRealizados((Integer) spinVuelosRealizados.getValue());
+					nuevoPiloto.setNacionaldidad(tnacionalidad.getText());
+					nuevoPiloto.setTipo((TipoPiloto) tipoPiloto.getSelectedItem());
 				}
-				
-				nuevoPiloto.setNombre(tnombre.getText());
-				nuevoPiloto.setApellido(tapellido.getText());
-				nuevoPiloto.setEdad((Integer) spinEdad.getValue());
-				nuevoPiloto.setDni(tdni.getText());
-				nuevoPiloto.setAnyosExperiencia((Integer) spinAnyosExperiencia.getValue());
-				nuevoPiloto.setVuelosRealizados((Integer) spinVuelosRealizados.getValue());
-				nuevoPiloto.setNacionaldidad(tnacionalidad.getText());
-				nuevoPiloto.setTipo((TipoPiloto) tipoPiloto.getSelectedItem());
-			
-				}
-			});
+			}
+		});
 		
 		
 		this.setLayout(new GridLayout(8, 2));

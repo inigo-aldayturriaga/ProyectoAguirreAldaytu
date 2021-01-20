@@ -217,11 +217,15 @@ public class BaseDeDatos {
 		
 	}
 	public static void insertarTripulacion(Tripulacion t) {
-		String s = "INSERT INTO Vuelo VALUES("+t.getTipoTripulacion()+",'"+t.getNombre()+"','"+t.getApellido()+"',"+t.getEdad()+",'"+t.getDni()+"','"+t.getNacionalidad()+"',"+t.getAnyosExperiencia()+","+t.getVuelosRealizados();    
+		String s = "INSERT INTO Tripulacion VALUES("+t.getTipoTripulacion()+",'"+t.getNombre()+"','"+t.getApellido()+"',"+t.getEdad()+",'"+t.getDni()+"','"+t.getNacionalidad()+"',"+t.getAnyosExperiencia()+","+t.getVuelosRealizados();    
+		String sql = "SELECT * FROM Tripulacion WHERE dni ='"+t.getDni()+"'";
 		con = inicializarBD("deustoAirport.db");
+		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			st.executeUpdate(s);
+			rs = st.executeQuery(sql);
+			if (!rs.next())
+				st.executeUpdate(s);
 			cerrarBD(con, st);
 		} catch (SQLException e) {
 			e.printStackTrace();
