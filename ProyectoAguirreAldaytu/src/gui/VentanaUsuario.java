@@ -1,13 +1,17 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,10 +23,13 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import java.lang.*;
 
 
 import bd.BaseDeDatos;
+import datos.DeustoAir;
 import datos.Vuelo;
 
 public class VentanaUsuario extends JFrame {
@@ -40,13 +47,7 @@ public class VentanaUsuario extends JFrame {
 		setSize(600,400);
 		pCentro = new JPanel();
 		pSur = new JPanel();
-		ArrayList<Vuelo> al;
 		
-		
-		BaseDeDatos.con = BaseDeDatos.inicializarBD("deustoAirport.db");
-		BaseDeDatos.crearTablasBD(BaseDeDatos.con);
-		BaseDeDatos.crearTablaVueloBD(BaseDeDatos.con);
-		al = BaseDeDatos.obtenerArrayDeVuelos();
 		
 		
 		//TABLA VUELOS
@@ -54,7 +55,7 @@ public class VentanaUsuario extends JFrame {
 		Object[] cabeceras = {"Hora Salida","Vuelo","Destino","Hora Llegada","Puerta","Observacion"};
 		modeloVuelos.setColumnIdentifiers(cabeceras);
 		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
-		for (Vuelo v : al) {
+		for (Vuelo v : DeustoAir.getVuelos()) {
 			String[] fila = {sdf.format(v.getHoraSalida()),v.getIdAvion(),v.getDestino(),sdf.format(v.getHoraLLegada()),String.valueOf(v.getPuerta()),v.getObservacion()};
 			modeloVuelos.addRow(fila);
 		}
@@ -67,6 +68,7 @@ public class VentanaUsuario extends JFrame {
 		pSur.add(btnGenerarFichero);
 		getContentPane().add(pSur,BorderLayout.SOUTH);
 		
+		
 		tablaVuelos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			
 			@Override
@@ -75,6 +77,28 @@ public class VentanaUsuario extends JFrame {
 				filaSeleccionada = tablaVuelos.getSelectedRow();
 			}
 		});
+		tablaVuelos.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,int row, int column) {
+				Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+				Date d;
+				try {
+					d = (Date) sdf.parse((String) modeloVuelos.getValueAt(row, 0));
+					if(d.getTime()-System.currentTimeMillis()< 3600000) {
+						c.setForeground(Color.RED);
+					}else {
+						c.setForeground(Color.BLACK);
+					}
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				/**
+				 * Si queda menos de una hora para el vuelo se pone en rojo
+				 */
+				return c;
+			}
+		});
+		 
 		
 		btnGenerarFichero.addActionListener(new ActionListener() {
 			
@@ -107,7 +131,6 @@ public class VentanaUsuario extends JFrame {
 			}
 		});
 		
-		BaseDeDatos.cerrarBD(BaseDeDatos.con, BaseDeDatos.st);
 		setVisible(true);
 	}
 

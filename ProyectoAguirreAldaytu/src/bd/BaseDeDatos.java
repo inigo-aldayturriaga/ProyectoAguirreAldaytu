@@ -79,12 +79,12 @@ public class BaseDeDatos {
 		try {
 			st = con.createStatement();
 			st.executeUpdate("create table Tripulacion "+
-						   "tipoTripulacion int, "+
-						   "(nombre string ,"+
+						   "(tipoTripulacion int, "+
+						   "nombre string,"+
 						   "apellido string, "+
 						   "edad int, "+
-						   "dni string"+
-						   "nacionalidad string"+
+						   "dni string,"+
+						   "nacionalidad string,"+
 						   "anyosExp int, "+
 						   "vuelosRealizados int)");
 				return st;
@@ -202,10 +202,14 @@ public class BaseDeDatos {
 	}
 	public static void insertarVuelo(Vuelo v) {
 		String s = "INSERT INTO Vuelo VALUES("+v.getHoraSalida().getTime()+",'"+v.getIdAvion()+"','"+v.getDestino()+"',"+v.getHoraLLegada().getTime()+","+v.getPuerta()+",'"+v.getObservacion()+"')";
+		String sql = "SELECT * FROM Vuelo WHERE idAvion ='"+v.getIdAvion()+"'";
+		ResultSet rs = null;
 		con = inicializarBD("deustoAirport.db");
 		try {
 			st = con.createStatement();
-			st.executeUpdate(s);
+			rs = st.executeQuery(sql);
+			if(!rs.next())
+				st.executeUpdate(s);
 			cerrarBD(con, st);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -282,12 +286,11 @@ public class BaseDeDatos {
 					Tripulacion t1 = new Piloto(nombre, apellido, edad, dni, anyosExperiencia, vuelosRealizados, nacionalidad, tipoTripulacion,null);
 					tripulacion.add(t1);
 				}else {
-					//Tripulacion t2 = new Azafata(nombre, apellido, edad, dni, anyosExperiencia, vuelosRealizados, nacionalidad, tipoTripulacion, null,null);
-					//tripulacion.add(t2);
+					Tripulacion t2 = new Azafata(nombre, apellido, edad, dni, nacionalidad, anyosExperiencia, vuelosRealizados, nacionalidad, tipoTripulacion,0,0);
+					tripulacion.add(t2);
 				}
 				
-				
-				
+					
 			}
 			
 		} catch (SQLException e) {

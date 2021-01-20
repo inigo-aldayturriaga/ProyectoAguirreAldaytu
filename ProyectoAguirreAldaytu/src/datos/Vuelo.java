@@ -114,7 +114,7 @@ public class Vuelo {
 	}
 
 	public Vuelo(String idAvion, String origen, String destino, Date horaSalida, Date horaLLegada,
-			ArrayList<Persona> listaPersonas,ArrayList<Tripulacion>listaTripulacion, String observacion,int puerta) {
+			ArrayList<Pasajero> listaPasajeros,ArrayList<Tripulacion>listaTripulacion, String observacion,int puerta) {
 		super();
 		this.idAvion = idAvion;
 		this.origen = origen;
@@ -129,8 +129,8 @@ public class Vuelo {
 
 	@Override
 	public String toString() {
-		return "Vuelo [idAvion=" + idAvion + ", origen=" + origen + ", destino=" + destino + ", puerta=" + puerta
-				+ ", observacion=" + observacion + ", horaSalida=" + horaSalida + ", horaLLegada=" + horaLLegada
+		return   idAvion + "," + origen + "," + destino + ",Puerta =" + puerta
+				+ ", Observacion =" + observacion + ", horaSalida=" + horaSalida + ", horaLLegada=" + horaLLegada
 				+ ", listaPasajeros=" + listaPasajeros +", listaTripulacion=" + listaTripulacion+ "]";
 	}
 

@@ -44,8 +44,8 @@ public class VentanaPrincipal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaLogin vl = new VentanaLogin();
 					DeustoAir da = new DeustoAir();
+					VentanaLogin vl = new VentanaLogin();
 					vl.setVisible(true);
 				}catch (Exception e){
 					e.printStackTrace();	
