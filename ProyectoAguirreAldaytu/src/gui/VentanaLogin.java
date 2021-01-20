@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 
 import bd.BaseDeDatos;
+import datos.Pasajero;
+
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -116,7 +118,8 @@ public class VentanaLogin extends JFrame {
 							nuevonombre = JOptionPane.showInputDialog("Ese nombre ya está ocupado, introduce otro nombre: ");
 						}
 						String contraseniaUsuario = JOptionPane.showInputDialog("Introduce una contraseña: ");
-						BaseDeDatos.insertarUsuario(nuevonombre, contraseniaUsuario);
+						Pasajero p = new Pasajero(nuevonombre,contraseniaUsuario);
+						BaseDeDatos.insertarPasajero(p);
 					}else if (resultado == 1) {
 						JOptionPane.showMessageDialog(null, "La contraseña es incorrecta","ACCESO DENEGADO",JOptionPane.ERROR_MESSAGE);
 						lblNombre.setText("");

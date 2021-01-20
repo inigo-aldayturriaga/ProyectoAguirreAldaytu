@@ -1,6 +1,8 @@
 package gui;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Date;
+
 import javax.swing.*;
 
 import datos.Vuelo;
@@ -81,8 +83,10 @@ public class VentanaVuelo extends JFrame{
 					nuevoVuelo.setIdAvion(tnumero.getText());
 					nuevoVuelo.setOrigen(torigen.getText());
 					nuevoVuelo.setDestino(tdestino.getText());
-					nuevoVuelo.setHoraSalida((Integer) spinHoraSalida.getValue());
-					nuevoVuelo.setHoraLlegada((Integer) spinHoraLlegada.getValue());
+					Date d1 = new Date((long) spinHoraSalida.getValue());
+					nuevoVuelo.setHoraSalida(d1);
+					Date d2 = new Date((long) spinHoraLlegada.getValue());
+					nuevoVuelo.setHoraLlegada(d2);
 					nuevoVuelo.setPuerta((Integer) spinPuerta.getValue());
 					nuevoVuelo.setObservacion(tobservacion.getText());
 					

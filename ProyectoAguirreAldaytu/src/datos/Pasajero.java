@@ -5,13 +5,20 @@ public class Pasajero extends Persona {
 	String contrasenia;//Contrasenia del usuario para entrar en la app
 	
 
-	public Pasajero(String nombre, String apellido, int edad, String dni) {
+	public Pasajero(String nombre, String apellido, int edad, String dni,int numeroBillete,ClasePasajero clase,String contrasenia) {
 		super(nombre, apellido, edad, dni);
 		this.numeroBillete = numeroBillete;
 		this.clase = clase;
 		this.contrasenia = contrasenia;
 		
 	}
+	
+	public Pasajero(String nombre,String contrasenia) {
+		super(nombre);
+		this.contrasenia = contrasenia;
+	}
+		
+	
 	//Getters y setters
 	public int getNumeroBillete() {
 		return numeroBillete;

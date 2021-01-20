@@ -15,7 +15,7 @@ public class MyJUnit {
 		 * Comprobacion de que se añaden bien los objetos a un arraylist
 		 */
 		ArrayList<Pasajero> listaPasajeros = new ArrayList<Pasajero>();
-		Pasajero p = new Pasajero("Iñigo", "Aldayturriaga", 19, "125442523N");
+		Pasajero p = new Pasajero("iñigo", "contrasenia");
 		listaPasajeros.add(p);
 		listaPasajeros.add(p);
 		listaPasajeros.add(p);

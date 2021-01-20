@@ -15,6 +15,9 @@ public abstract class Persona {
 		this.edad = edad;
 		this.dni = dni;
 	}
+	public Persona(String nombre) {
+		this.nombre = nombre;
+	}
 	//Getters y setters
 	public String getNombre() {
 		return nombre;

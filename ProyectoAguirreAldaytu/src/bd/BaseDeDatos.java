@@ -1,6 +1,8 @@
 package bd;
 
 import datos.Azafata;
+import datos.ClasePasajero;
+import datos.Pasajero;
 import datos.Persona;
 import datos.Piloto;
 import datos.Tripulacion;
@@ -34,11 +36,15 @@ public class BaseDeDatos {
 	 * @param con	Conexión creada
 	 * @return	sentencia de trabajo si se crea correctamente
 	 */
-	public static Statement crearTablasBD( Connection con ) {
+	public static Statement crearTablaPasajeroBD( Connection con ) {
 		try {
 			st = con.createStatement();
-			st.executeUpdate("create table Persona "+
+			st.executeUpdate("create table Pasajero "+
 						   "(nombre string, "+
+						   "apellido string, "+
+						   "edad int, "+
+						   "dni string, "+
+						   "numeroBillete int, "+
 						   " contrasenia string)");
 			return st;
 		} catch (SQLException e) {
@@ -60,21 +66,7 @@ public class BaseDeDatos {
 			return null;
 		}
 	}
-	public static Statement crearTablaPasajeroBD( Connection con ) {
-		try {
-			st = con.createStatement();
-			st.executeUpdate("create table Pasajero "+
-						   "(horaSalida bigint, "+
-						   " idAvion string, "+
-						   " destino string, "+
-						   " horaLLegada bigint, "+
-						   " puerta int, "+
-						   "observacion string)");
-				return st;
-		} catch (SQLException e) {
-			return null;
-		}
-	}
+	
 	public static Statement crearTablaTripulacionBD( Connection con ) {
 		try {
 			st = con.createStatement();
@@ -97,11 +89,11 @@ public class BaseDeDatos {
 	 * @param con	Conexión creada
 	 * @return	sentencia de trabajo si se borra correctamente
 	 */
-	public static Statement reiniciarBD( Connection con ) {
+	public static Statement reiniciarBDPasajero( Connection con ) {
 		try {
 			st = con.createStatement();
-			st.executeUpdate("drop table if exists Persona");
-			return crearTablasBD( con );
+			st.executeUpdate("drop table if exists Pasajero");
+			return crearTablaPasajeroBD( con );
 		} catch (SQLException e) {
 			return null;
 		}
@@ -110,7 +102,7 @@ public class BaseDeDatos {
 		try {
 			st = con.createStatement();
 			st.executeUpdate("drop table if exists Vuelo");
-			return crearTablasBD( con );
+			return crearTablaVueloBD( con );
 		} catch (SQLException e) {
 			return null;
 		}
@@ -138,7 +130,7 @@ public class BaseDeDatos {
 	 */
 	public static boolean existeUsuario(String nombre) {
 		boolean existeUsuario = false;
-		String sql = "SELECT * FROM Persona WHERE nombre ='"+nombre+"'";
+		String sql = "SELECT nombre FROM Pasajero WHERE nombre ='"+nombre+"'";
 		con = inicializarBD("deustoAirport.db");
 		try {
 			st = con.createStatement(); 
@@ -161,7 +153,7 @@ public class BaseDeDatos {
 	 */
 	public static int comprobarUsuario(String nombre, String contrasenia) {
 		int resultado = 0;
-		String s = "SELECT * FROM Persona WHERE nombre = '"+nombre+"'";
+		String s = "SELECT nombre,contrasenia FROM Pasajero WHERE nombre = '"+nombre+"'";
 		
 		con = inicializarBD("deustoAirport.db");
 		try {
@@ -185,13 +177,16 @@ public class BaseDeDatos {
 	/**
 	 * Metodo para insertar personas que se pueden logear
 	 */
-	public static void insertarUsuario(String nombre, String contrasenia) {
-		
-		String s = "INSERT INTO Persona VALUES('"+nombre+"','"+contrasenia+"')";
+	public static void insertarPasajero(Pasajero p) {
+		String s = "INSERT INTO Pasajero VALUES('"+p.getNombre()+"','"+p.getApellido()+"',"+p.getEdad()+",'"+p.getDni()+"',"+p.getNumeroBillete()+",'"+p.getContrasenia()+"')";
+		String sql = "SELECT dni FROM Pasajero WHERE dni= '"+p.getDni()+"'";
 		con = BaseDeDatos.inicializarBD("deustoAirport.db");
+		ResultSet rs = null;
 		try {
 			st = con.createStatement();
-			st.executeUpdate(s);
+			rs = st.executeQuery(sql);
+			if(!rs.next())
+				st.executeUpdate(s);
 			cerrarBD(con, st);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -201,7 +196,7 @@ public class BaseDeDatos {
 	*/
 	}
 	public static void insertarVuelo(Vuelo v) {
-		String s = "INSERT INTO Vuelo VALUES("+v.getHoraSalida().getTime()+",'"+v.getIdAvion()+"','"+v.getDestino()+"',"+v.getHoraLLegada().getTime()+","+v.getPuerta()+",'"+v.getObservacion()+"')";
+		String s = "INSERT INTO Vuelo VALUES("+v.getHoraSalida().getTime()+",'"+v.getIdAvion()+"','"+v.getDestino()+"',"+v.getHoraLlegada().getTime()+","+v.getPuerta()+",'"+v.getObservacion()+"')";
 		String sql = "SELECT * FROM Vuelo WHERE idAvion ='"+v.getIdAvion()+"'";
 		ResultSet rs = null;
 		con = inicializarBD("deustoAirport.db");
@@ -217,7 +212,7 @@ public class BaseDeDatos {
 		
 	}
 	public static void insertarTripulacion(Tripulacion t) {
-		String s = "INSERT INTO Tripulacion VALUES("+t.getTipoTripulacion()+",'"+t.getNombre()+"','"+t.getApellido()+"',"+t.getEdad()+",'"+t.getDni()+"','"+t.getNacionalidad()+"',"+t.getAnyosExperiencia()+","+t.getVuelosRealizados();    
+		String s = "INSERT INTO Tripulacion VALUES("+t.getTipoTripulacion()+",'"+t.getNombre()+"','"+t.getApellido()+"',"+t.getEdad()+",'"+t.getDni()+"','"+t.getNacionalidad()+"',"+t.getAnyosExperiencia()+","+t.getVuelosRealizados()+")";    
 		String sql = "SELECT * FROM Tripulacion WHERE dni ='"+t.getDni()+"'";
 		con = inicializarBD("deustoAirport.db");
 		ResultSet rs = null;
@@ -249,8 +244,9 @@ public class BaseDeDatos {
 				Date horaLlegada = new Date(rs.getLong("horaLlegada"));
 				int puerta = rs.getInt("puerta");	
 				String observacion = rs.getString("observacion");
-
-				Vuelo v1 = new Vuelo(idAvion, null, destino, horaSalida,horaLlegada, null,null,observacion,puerta);
+				ArrayList<Pasajero> pasajeros = new ArrayList<Pasajero>();
+				ArrayList<Tripulacion> tripulacion1 = new ArrayList<Tripulacion>();
+				Vuelo v1 = new Vuelo(idAvion, null, destino, horaSalida,horaLlegada, pasajeros,tripulacion1,observacion,puerta);
 				vuelos.add(v1);
 			}
 			
@@ -311,6 +307,34 @@ public class BaseDeDatos {
 			}			
 		}		
 		return tripulacion;		
+	}
+	public static ArrayList<Pasajero> obtenerArrayDePasajeros(){
+		String sql = "SELECT * FROM Pasajero";
+		con = inicializarBD("deustoAirport.db");
+		ArrayList<Pasajero> pasajeros = new ArrayList<Pasajero>();
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
+			while(rs.next()) {
+				String nombre = rs.getString("nombre");
+				String apellido = rs.getString("apellido");
+				int edad = rs.getInt("edad");
+				String dni = rs.getString("dni");
+				int numeroBillete = rs.getInt("numeroBillete");
+				String contrasenia = rs.getString("contrasenia");
+				/**
+				 * Por defecto la clase del pasajero es economica
+				 */
+				Pasajero p = new Pasajero(nombre, apellido, edad, dni, numeroBillete,ClasePasajero.ECONOMICA, contrasenia);
+				pasajeros.add(p);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return pasajeros;
+		
 	}
 	
 	public static void modificarVuelo(String a, String b, String c, String d, String e) {

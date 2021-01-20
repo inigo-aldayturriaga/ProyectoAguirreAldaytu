@@ -10,12 +10,26 @@ public class Piloto extends Tripulacion{
 		this.tipo = tipo;
 	}
 	
+	
+
+
+
+	@Override
+	public String toString() {
+		return " Piloto ["+nombre+" "+apellido+" "+"anyosExperiencia=" + anyosExperiencia +", vuelosRealizados=" + vuelosRealizados+" , nacionalidad=" + nacionalidad+"]";
+	}
+
+
+
+
+
 	public TipoPiloto getTipo() {
 		return tipo;
 	}
 	public void setTipo(TipoPiloto tipo) {
 		this.tipo = tipo;
 	}
+	
 
 	
 	

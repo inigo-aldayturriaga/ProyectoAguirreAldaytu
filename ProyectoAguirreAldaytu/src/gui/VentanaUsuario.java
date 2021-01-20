@@ -3,6 +3,8 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.GridLayout;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -13,8 +15,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -36,19 +40,23 @@ public class VentanaUsuario extends JFrame {
 	private JTable tablaVuelos;
 	private DefaultTableModel modelo;
 	private ArrayList<Vuelo> listaVuelos = new ArrayList<Vuelo>();
-	private JPanel pCentro,pSur;
+	private JPanel pCentro,pSur,pAnimacion;
 	private JScrollPane sc;
+	private JLabel lblAvion1,lblAvion2,lblBoom;
+	private int anchoVentana,xinicial,xfinal;
+	private GridLayout gridlayout;
 	
 	private JButton btnGenerarFichero;
 	private int filaSeleccionada;
 	
 	public VentanaUsuario () {
 		super();
-		setSize(600,400);
+		setSize(800, 600);
 		pCentro = new JPanel();
+		gridlayout = new GridLayout(2,1);
+		pCentro.setLayout(gridlayout);
 		pSur = new JPanel();
-		
-		
+		pAnimacion = new JPanel();
 		
 		//TABLA VUELOS
 		DefaultTableModel modeloVuelos = new DefaultTableModel();
@@ -56,17 +64,42 @@ public class VentanaUsuario extends JFrame {
 		modeloVuelos.setColumnIdentifiers(cabeceras);
 		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
 		for (Vuelo v : DeustoAir.getVuelos()) {
-			String[] fila = {sdf.format(v.getHoraSalida()),v.getIdAvion(),v.getDestino(),sdf.format(v.getHoraLLegada()),String.valueOf(v.getPuerta()),v.getObservacion()};
+			String[] fila = {sdf.format(v.getHoraSalida()),v.getIdAvion(),v.getDestino(),sdf.format(v.getHoraLlegada()),String.valueOf(v.getPuerta()),v.getObservacion()};
 			modeloVuelos.addRow(fila);
 		}
+		ImageIcon imBoom = new ImageIcon("imagenes/boom.jpg");
+		lblBoom = new JLabel(imBoom);
+		lblBoom.setBounds(84, 31, 267, 144);
+		lblBoom.setVisible(false);
+		
+		
+		
+		ImageIcon im1 =  new ImageIcon("imagenes/avionDerecha.jpg");
+		lblAvion1 = new JLabel(im1);
+		lblAvion1.setBounds(20, 41, 86, 83);
+		
+		
+		ImageIcon im2 =  new ImageIcon("imagenes/avionIzquierda.jpg");
+		lblAvion2 = new JLabel(im2);
+		lblAvion2.setBounds(300, 41, 77, 83);
+		
+		
+
 		
 		tablaVuelos = new JTable (modeloVuelos);
 		sc = new JScrollPane(tablaVuelos);
-		getContentPane().add(sc,BorderLayout.CENTER);
+		pCentro.add(sc);
+		
+		pAnimacion.add(lblBoom);
+		pAnimacion.add(lblAvion1);
+		pAnimacion.add(lblAvion2);
+		
+		pCentro.add(pAnimacion);
 		
 		btnGenerarFichero = new JButton("IMPRIMIR DATOS VUELO");
 		pSur.add(btnGenerarFichero);
 		getContentPane().add(pSur,BorderLayout.SOUTH);
+		getContentPane().add(pCentro,BorderLayout.CENTER);
 		
 		
 		tablaVuelos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -130,7 +163,51 @@ public class VentanaUsuario extends JFrame {
 				}
 			}
 		});
-		
+		Runnable r =new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				int x1 = lblAvion1.getX();
+				int y1 = lblAvion1.getY();
+				
+				int x2 = lblAvion2.getX();
+				int y2 = lblAvion2.getY();
+				
+				while(x1+lblAvion1.getWidth() < x2) {
+					x1 = x1 + 1;
+					lblAvion1.setLocation(x1, y1);
+					x2 = x2 - 1;
+					lblAvion2.setLocation(x2, y2);
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				lblAvion1.setVisible(false);
+				lblAvion2.setVisible(false);
+				for(int i=0;i<3;i++) {
+					lblBoom.setVisible(true);
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					lblBoom.setVisible(false);
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		Thread t = new Thread(r);
+		t.start();
 		setVisible(true);
 	}
 

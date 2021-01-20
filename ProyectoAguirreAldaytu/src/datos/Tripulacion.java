@@ -53,8 +53,6 @@ public abstract class Tripulacion extends Persona {
 	}
 	public void setVuelosRealizados(int vuelosRealizados) {
 		this.vuelosRealizados = vuelosRealizados;
-	}
-	
-	
+	}	
 }
 
