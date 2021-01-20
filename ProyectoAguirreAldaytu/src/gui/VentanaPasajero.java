@@ -4,6 +4,9 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import datos.ClasePasajero;
+import datos.Pasajero;
+import datos.Piloto;
+import datos.TipoPiloto;
 
 
 
@@ -16,18 +19,18 @@ public class VentanaPasajero extends JFrame {
     JLabel ledad;
     JSpinner spinEdad;
     JLabel ldni;
-    JSpinner spinDni;
-    JLabel lresidencia;
-    JTextField tResidencia;
+    JTextField tdni;
     JLabel lnumeroBillete;
     JSpinner spinNumeroBillete;
     JLabel lclase;
     JComboBox<ClasePasajero> comboClase;
+    JLabel lcontrasenia;
+	JTextField tcontrasenia;
     JButton crear;
     JButton cancelar;
     
 
-    public VentanaPasajero() {
+    public VentanaPasajero(Pasajero pasajero) {
     	lnombre = new JLabel("Nombre");
 		tnombre = new JTextField(20);
 		lapellido = new JLabel("Apellido");
@@ -35,9 +38,7 @@ public class VentanaPasajero extends JFrame {
 		ledad = new JLabel("Edad");
 		spinEdad = new JSpinner(new SpinnerNumberModel());
 		ldni = new JLabel("DNI");
-		spinDni = new JSpinner(new SpinnerNumberModel());
-		lresidencia = new JLabel("Lugar de residencia");
-		tResidencia = new JTextField(20);
+		tdni = new JTextField(20);
 		lnumeroBillete = new JLabel("Numero del billete");
 		spinNumeroBillete = new JSpinner(new SpinnerNumberModel());		
 		comboClase = new JComboBox<ClasePasajero>();
@@ -46,13 +47,48 @@ public class VentanaPasajero extends JFrame {
 		comboClase.addItem(ClasePasajero.EJECUTIVA);
 		comboClase.addItem(ClasePasajero.PRIMERA);
 		comboClase.addItem(ClasePasajero.SEGUNDA);
+		lcontrasenia = new JLabel("Contraseña");
+		tcontrasenia = new JTextField(20);
+		
+		
 		crear = new JButton("Crear");
+		if (pasajero != null) {
+			crear.setText("Guardar datos");
+			tnombre.setText(pasajero.getNombre());
+			tapellido.setText(pasajero.getApellido());
+			spinEdad.setValue(pasajero.getEdad());
+			tdni.setText(pasajero.getDni());
+			spinNumeroBillete.setValue(pasajero.getNumeroBillete());
+			comboClase.setSelectedItem(pasajero.getClase());
+			tcontrasenia.setText(pasajero.getContrasenia());
+			
+		}
+		
+		
 		cancelar = new JButton("Cancelar");
 		
 		cancelar.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();				
+			}
+		});
+		
+		crear.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Pasajero nuevoPasajero;
+				
+				if (pasajero != null) {
+					nuevoPasajero = pasajero;
+					nuevoPasajero.setNombre(tnombre.getText());
+					nuevoPasajero.setApellido(tapellido.getText());
+					nuevoPasajero.setEdad((Integer) spinEdad.getValue());
+					nuevoPasajero.setDni(tdni.getText());
+					nuevoPasajero.setNumeroBillete((Integer) spinNumeroBillete.getValue());
+					nuevoPasajero.setClase((ClasePasajero) comboClase.getSelectedItem());
+					nuevoPasajero.setContrasenia(tcontrasenia.getText());
+				}
 			}
 		});
 		
@@ -66,11 +102,13 @@ public class VentanaPasajero extends JFrame {
 		add(ledad);
 		add(spinEdad);
 		add(ldni);
-		add(spinDni);
-		add(lresidencia);
-		add(tResidencia);
+		add(tdni);
+		add(lnumeroBillete);
+		add(spinNumeroBillete);
 		add(lclase);
 		add(comboClase);
+		add(lcontrasenia);
+		add(tcontrasenia);
 		add(crear);
 		add(cancelar);
 		

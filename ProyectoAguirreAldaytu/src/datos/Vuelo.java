@@ -13,7 +13,7 @@ public class Vuelo {
 	int puerta;//Puerta de embarque
 	String observacion;//Si es llamada ultima llamada retraso etc
 	Date horaSalida;//Hora de salida del vuelo
-	Date horaLLegada;//Hora de llegada del vuelo
+	Date horaLlegada;//Hora de llegada del vuelo
 	ArrayList<Pasajero> listaPasajeros;//Lista de toda la gente que va en el vuelo
 	ArrayList<Tripulacion> listaTripulacion;
 	
@@ -77,13 +77,13 @@ public class Vuelo {
 	}
 
 
-	public Date getHoraLLegada() {
-		return horaLLegada;
+	public Date getHoraLlegada() {
+		return horaLlegada;
 	}
 
 
-	public void setHoraLLegada(Date horaLLegada) {
-		this.horaLLegada = horaLLegada;
+	public void setHoraLlegada(Date horaLlegada) {
+		this.horaLlegada = horaLlegada;
 	}
 
 
@@ -120,7 +120,7 @@ public class Vuelo {
 		this.origen = origen;
 		this.destino = destino;
 		this.horaSalida = horaSalida;
-		this.horaLLegada = horaLLegada;
+		this.horaLlegada = horaLLegada;
 		this.listaPasajeros = listaPasajeros;
 		this.listaTripulacion = listaTripulacion;
 		this.observacion = observacion;
@@ -130,7 +130,7 @@ public class Vuelo {
 	@Override
 	public String toString() {
 		return   idAvion + "," + origen + "," + destino + ",Puerta =" + puerta
-				+ ", Observacion =" + observacion + ", horaSalida=" + horaSalida + ", horaLLegada=" + horaLLegada
+				+ ", Observacion =" + observacion + ", horaSalida=" + horaSalida + ", horaLlegada=" + horaLlegada
 				+ ", listaPasajeros=" + listaPasajeros +", listaTripulacion=" + listaTripulacion+ "]";
 	}
 

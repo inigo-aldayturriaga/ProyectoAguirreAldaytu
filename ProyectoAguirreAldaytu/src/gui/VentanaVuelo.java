@@ -3,10 +3,12 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import datos.Vuelo;
+
 public class VentanaVuelo extends JFrame{
 	
 	JLabel lnumero;
-    JSpinner spinNumero;
+    JTextField tnumero;
 	JLabel lorigen;
     JTextField torigen;
     JLabel ldestino;
@@ -19,12 +21,16 @@ public class VentanaVuelo extends JFrame{
     JSpinner spinNumeroPasajeros;
     JLabel lnumeroMaxPasajeros;
     JSpinner spinNumeroMaxPasajeros;
+    JLabel lpuerta;
+    JSpinner spinPuerta;
+    JLabel lobservacion;
+    JTextField tobservacion;
     JButton crear;
 	JButton cancelar;
     
-    public VentanaVuelo() {
+    public VentanaVuelo(Vuelo vuelo) {
     	lnumero = new JLabel("ID del avión");
-		spinNumero = new JSpinner(new SpinnerNumberModel());
+    	tnumero = new JTextField(20);
 		lorigen = new JLabel("Origen");
 		torigen = new JTextField(20);
 		ldestino = new JLabel("Apellido");
@@ -33,11 +39,29 @@ public class VentanaVuelo extends JFrame{
 		spinHoraSalida = new JSpinner(new SpinnerNumberModel());
 		lhoraLlegada = new JLabel("Hora de llegada");
 		spinHoraLlegada = new JSpinner(new SpinnerNumberModel());
-		lnumeroPasajeros = new JLabel("Numero de pasajeros");
+		lnumeroPasajeros = new JLabel("Lista de pasajeros");
 		spinNumeroPasajeros = new JSpinner(new SpinnerNumberModel());
-		lnumeroMaxPasajeros = new JLabel("Capacidad máxima del avión");
-		spinNumeroMaxPasajeros = new JSpinner(new SpinnerNumberModel());
+		lpuerta = new JLabel("Numero puerta de embarque");
+		spinPuerta = new JSpinner(new SpinnerNumberModel());
+		lobservacion = new JLabel("Observacion");
+		tobservacion = new JTextField(20);
 		crear = new JButton("Crear");
+		
+		if (vuelo != null) {
+			crear.setText("Guardar datos");
+			tnumero.setText(vuelo.getIdAvion());
+			torigen.setText(vuelo.getOrigen());
+			tdestino.setText(vuelo.getDestino());
+			spinHoraSalida.setValue(vuelo.getHoraSalida());
+			spinHoraLlegada.setValue(vuelo.getHoraLlegada());
+			spinNumeroPasajeros.setValue(vuelo.getListaPasajeros());
+			spinPuerta.setValue(vuelo.getPuerta());
+			tobservacion.setText(vuelo.getObservacion());
+			
+			
+			
+		}
+		
 		cancelar = new JButton("Cancelar");
 		
 		cancelar.addActionListener(new ActionListener() {			
@@ -46,11 +70,30 @@ public class VentanaVuelo extends JFrame{
 				dispose();				
 			}
 		});
+		
+		crear.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Vuelo nuevoVuelo;
+				
+				if (vuelo != null) {
+					nuevoVuelo = vuelo;
+					nuevoVuelo.setIdAvion(tnumero.getText());
+					nuevoVuelo.setOrigen(torigen.getText());
+					nuevoVuelo.setDestino(tdestino.getText());
+					nuevoVuelo.setHoraSalida((Integer) spinHoraSalida.getValue());
+					nuevoVuelo.setHoraLlegada((Integer) spinHoraLlegada.getValue());
+					nuevoVuelo.setPuerta((Integer) spinPuerta.getValue());
+					nuevoVuelo.setObservacion(tobservacion.getText());
+					
+				}
+			}
+		});
     
 		this.setLayout(new GridLayout(8, 2));
 		//añadimos las etiquetas, spinners y combobox a la ventana
 		add(lnumero);
-		add(spinNumero);
+		add(tnumero);
 		add(lorigen);
 		add(torigen);
 		add(ldestino);
@@ -61,8 +104,10 @@ public class VentanaVuelo extends JFrame{
 		add(spinHoraLlegada);
 		add(lnumeroPasajeros);
 		add(spinNumeroPasajeros);
-		add(lnumeroMaxPasajeros);
-		add(spinNumeroMaxPasajeros);
+		add(lpuerta);
+		add(spinPuerta);
+		add(lobservacion);
+		add(tobservacion);
 		add(crear);
 		add(cancelar);
 		
