@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class VentanaLogin extends JFrame {
@@ -23,7 +24,8 @@ public class VentanaLogin extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	public JLabel lblNombre,lblContrasenia;
-	public JTextField tfNombre,tfContrasenia;
+	public JTextField tfNombre;
+	public JPasswordField pfContrasenia;
 	public JButton bConfirmar,bRecuperarContrasenia,bBorrar;
 	public JPanel pNorte,pCentro,pSur;
 	
@@ -56,7 +58,7 @@ public class VentanaLogin extends JFrame {
 		 * Inicializamos los textfields
 		 */
 		tfNombre = new JTextField(5);
-		tfContrasenia = new JTextField(5);
+		pfContrasenia = new JPasswordField(30);
 		/**
 		 * Inicializamos los botones
 		 */
@@ -75,7 +77,7 @@ public class VentanaLogin extends JFrame {
 		pCentro.add(lblNombre);
 		pCentro.add(tfNombre);
 		pCentro.add(lblContrasenia);
-		pCentro.add(tfContrasenia);
+		pCentro.add(pfContrasenia);
 		pCentro.setBackground(color1);
 		pSur.setBackground(color1);
 		pNorte.setBackground(color1);
@@ -100,7 +102,7 @@ public class VentanaLogin extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String nombre = tfNombre.getText();
-				String contrasenia = tfContrasenia.getText();
+				String contrasenia = pfContrasenia.getText();
 				/**
 				 * Si el nombre y la contrasenia es admin entraremos como administrador(trabajador de la aerolinea), sino en la variable resultado del metodo de la base de datos sabemos si no existe el usuario, si existe el usuario pero la contrasenia está mal o si lo ha metido bien
 				 */
@@ -143,7 +145,7 @@ public class VentanaLogin extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				tfNombre.setText("");
-				tfContrasenia.setText("");
+				pfContrasenia.setText("");
 				
 			}
 		});

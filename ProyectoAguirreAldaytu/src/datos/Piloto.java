@@ -5,22 +5,16 @@ public class Piloto extends Tripulacion{
 	
 	
 	public Piloto(String nombre, String apellido, int edad, String dni, int anyosExperiencia,
-			int vuelosRealizados, String nacionalidad, int tipoTripulacion,TipoPiloto tipo) {
-		super(nombre, apellido, edad, dni, anyosExperiencia, vuelosRealizados, nacionalidad, tipoTripulacion);
+			int vuelosRealizados, String nacionalidad,TipoPiloto tipo) {
+		super(nombre, apellido, edad, dni, anyosExperiencia, vuelosRealizados, nacionalidad);
 		this.tipo = tipo;
 	}
 	
-	
-
-
 
 	@Override
 	public String toString() {
 		return " Piloto ["+nombre+" "+apellido+" "+"anyosExperiencia=" + anyosExperiencia +", vuelosRealizados=" + vuelosRealizados+" , nacionalidad=" + nacionalidad+"]";
 	}
-
-
-
 
 
 	public TipoPiloto getTipo() {

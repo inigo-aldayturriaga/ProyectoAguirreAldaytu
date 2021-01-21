@@ -90,7 +90,7 @@ public class VentanaAzafata extends JFrame {
 					nueva.setDni(tdni.getText());
 					nueva.setAnyosExperiencia((Integer) spinAnyosExperiencia.getValue());
 					nueva.setVuelosRealizados((Integer) spinVuelosRealizados.getValue());
-					nueva.setNacionaldidad(tnacionalidad.getText());
+					nueva.setNacionalidad(tnacionalidad.getText());
 					nueva.setAltura((Integer) spinAltura.getValue());
 					nueva.setPeso((Integer) spinPeso.getValue());
 

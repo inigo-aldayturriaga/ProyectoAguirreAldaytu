@@ -21,6 +21,7 @@ public class VentanaPrincipal extends JFrame {
 	JMenu tripulacion;//Dentro de la barra un menu tripulacion
 	JMenu vuelos;//Dentro de la barra un menu vuelos
 	JMenuItem asignacionTripulacion,asignacionPasajeros,nuevoVuelo,nuevoPasajero,nuevoPiloto,nuevaAzafata;
+	PanelFondo fondo;
 	
 	public VentanaPrincipal() {
 		JFrame ventana = this;
@@ -35,6 +36,7 @@ public class VentanaPrincipal extends JFrame {
 		nuevoPasajero = new JMenuItem("Añadir nuevo pasajero");
 		nuevoPiloto = new JMenuItem("Añadir nuevo piloto");
 		nuevaAzafata = new JMenuItem("Añadir nueva azafata");
+		fondo = new PanelFondo("imagenes/fondo.jpg");
 		
 		//Añadimos a la barra los diferentes menus y al menu tripulacion los items pilotos y azafatas
 		barra.add(pasajeros);
@@ -52,6 +54,7 @@ public class VentanaPrincipal extends JFrame {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("Deusto Airport");
 		setSize(500, 500);
+		setContentPane(fondo);
 		asignacionPasajeros.addActionListener(new ActionListener() {
 			
 			@Override

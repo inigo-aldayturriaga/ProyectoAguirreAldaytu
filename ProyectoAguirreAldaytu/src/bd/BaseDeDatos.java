@@ -5,6 +5,7 @@ import datos.ClasePasajero;
 import datos.Pasajero;
 import datos.Persona;
 import datos.Piloto;
+import datos.TipoPiloto;
 import datos.Tripulacion;
 import datos.Vuelo;
 
@@ -21,6 +22,7 @@ public class BaseDeDatos {
 	 */
 	public static Connection con;
 	public static Statement st;
+	private static String s;
 	
 	public static Connection inicializarBD( String nombreBD ) {
 		try {
@@ -67,18 +69,36 @@ public class BaseDeDatos {
 		}
 	}
 	
-	public static Statement crearTablaTripulacionBD( Connection con ) {
+	public static Statement crearTablaAzafataBD( Connection con ) {
 		try {
 			st = con.createStatement();
-			st.executeUpdate("create table Tripulacion "+
-						   "(tipoTripulacion int, "+
-						   "nombre string,"+
+			st.executeUpdate("create table Azafata "+
+						   "(nombre string,"+
 						   "apellido string, "+
 						   "edad int, "+
 						   "dni string,"+
 						   "nacionalidad string,"+
 						   "anyosExp int, "+
-						   "vuelosRealizados int)");
+						   "vuelosRealizados int, "+
+						   "altura int, "+
+						   "peso int )");
+				return st;
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+	public static Statement crearTablaPilotoBD( Connection con ) {
+		try {
+			st = con.createStatement();
+			st.executeUpdate("create table Piloto "+
+						   "(nombre string,"+
+						   "apellido string, "+
+						   "edad int, "+
+						   "dni string,"+
+						   "nacionalidad string,"+
+						   "anyosExp int, "+
+						   "vuelosRealizados int, "+
+						   "tipoPiloto int )");
 				return st;
 		} catch (SQLException e) {
 			return null;
@@ -103,6 +123,24 @@ public class BaseDeDatos {
 			st = con.createStatement();
 			st.executeUpdate("drop table if exists Vuelo");
 			return crearTablaVueloBD( con );
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+	public static Statement reiniciarBDPiloto( Connection con ) {
+		try {
+			st = con.createStatement();
+			st.executeUpdate("drop table if exists Piloto");
+			return crearTablaPilotoBD( con );
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+	public static Statement reiniciarBDAzafata( Connection con ) {
+		try {
+			st = con.createStatement();
+			st.executeUpdate("drop table if exists Azafata");
+			return crearTablaAzafataBD( con );
 		} catch (SQLException e) {
 			return null;
 		}
@@ -211,9 +249,18 @@ public class BaseDeDatos {
 		}
 		
 	}
-	public static void insertarPiloto(Piloto nuevoPiloto) {
-		String s = "INSERT INTO Tripulacion VALUES("+nuevoPiloto.getTipoTripulacion()+",'"+nuevoPiloto.getNombre()+"','"+nuevoPiloto.getApellido()+"',"+nuevoPiloto.getEdad()+",'"+nuevoPiloto.getDni()+"','"+nuevoPiloto.getNacionalidad()+"',"+nuevoPiloto.getAnyosExperiencia()+","+nuevoPiloto.getVuelosRealizados()+"',"+nuevoPiloto.getTipo()+")";    
-		String sql = "SELECT * FROM Tripulacion WHERE dni ='"+nuevoPiloto.getDni()+"'";
+	public static String sentenciaPiloto(Piloto p) {
+		String s = "";
+		if(p.getTipo() == TipoPiloto.COMERCIAL) {
+			s = "INSERT INTO Piloto VALUES('"+p.getNombre()+"','"+p.getApellido()+"',"+p.getEdad()+",'"+p.getDni()+"','"+p.getNacionalidad()+"',"+p.getAnyosExperiencia()+","+p.getVuelosRealizados()+","+0+")";
+		}else {
+			s = "INSERT INTO Piloto VALUES('"+p.getNombre()+"','"+p.getApellido()+"',"+p.getEdad()+",'"+p.getDni()+"','"+p.getNacionalidad()+"',"+p.getAnyosExperiencia()+","+p.getVuelosRealizados()+","+1+")";
+		}   
+		return s;
+	}
+	public static void insertarPiloto(Piloto p) {
+		String s = BaseDeDatos .sentenciaPiloto(p);
+		String sql = "SELECT * FROM Piloto WHERE dni ='"+p.getDni()+"'";
 		con = inicializarBD("deustoAirport.db");
 		ResultSet rs = null;
 		try {
@@ -227,9 +274,9 @@ public class BaseDeDatos {
 		}
 		
 	}
-	public static void insertarAzafata(Azafata nueva) {
-		String s = "INSERT INTO Tripulacion VALUES("+nueva.getTipoTripulacion()+",'"+nueva.getNombre()+"','"+nueva.getApellido()+"',"+nueva.getEdad()+",'"+nueva.getDni()+"','"+nueva.getNacionalidad()+"',"+nueva.getAnyosExperiencia()+","+nueva.getVuelosRealizados()+"',"+nueva.getAltura()+","+nueva.getPeso()+")"; 
-		String sql = "SELECT * FROM Tripulacion WHERE dni ='"+nueva.getDni()+"'";
+	public static void insertarAzafata(Azafata a) {
+		String s = "INSERT INTO Azafata VALUES('"+a.getNombre()+"','"+a.getApellido()+"',"+a.getEdad()+",'"+a.getDni()+"','"+a.getNacionalidad()+"',"+a.getAnyosExperiencia()+","+a.getVuelosRealizados()+","+a.getAltura()+","+a.getPeso()+")"; 
+		String sql = "SELECT * FROM Azafata WHERE dni ='"+a.getDni()+"'";
 		con = inicializarBD("deustoAirport.db");
 		ResultSet rs = null;
 		try {
@@ -282,15 +329,18 @@ public class BaseDeDatos {
 		return vuelos;		
 	}
 	public static ArrayList<Tripulacion> obtenerArrayDeTripulacion(){
-		String sql = "SELECT * FROM Tripulacion";
+		String sql = "SELECT * FROM Piloto";
+		String sql2 = "SELECT * FROM Azafata";
 		con = inicializarBD("deustoAirport.db");		
 		ArrayList<Tripulacion> tripulacion = new ArrayList<Tripulacion>();
 		ResultSet rs = null;
 		try {
 			st = con.createStatement();
 			rs = st.executeQuery(sql);
+			/**
+			 * Piloto
+			 */
 			while(rs.next()) {
-				int tipoTripulacion = rs.getInt("tipoTripulacion");
 				String nombre = rs.getString("nombre");
 				String apellido = rs.getString("apellido");
 				int edad = rs.getInt("edad");
@@ -298,15 +348,30 @@ public class BaseDeDatos {
 				String nacionalidad = rs.getString("nacionalidad");
 				int anyosExperiencia = rs.getInt("anyosExp");
 				int vuelosRealizados = rs.getInt("vuelosRealizados");
-				if (tipoTripulacion == 0) {
-					Tripulacion t1 = new Piloto(nombre, apellido, edad, dni, anyosExperiencia, vuelosRealizados, nacionalidad, tipoTripulacion,null);
+				int tipoPiloto = rs.getInt("tipoPiloto");
+				
+				if(tipoPiloto == 0) {
+					Tripulacion t1 = new Piloto(nombre, apellido, edad, dni, anyosExperiencia, vuelosRealizados, nacionalidad,TipoPiloto.COMERCIAL);
 					tripulacion.add(t1);
 				}else {
-					Tripulacion t2 = new Azafata(nombre, apellido, edad, dni, nacionalidad, anyosExperiencia, vuelosRealizados, nacionalidad, tipoTripulacion,0,0);
-					tripulacion.add(t2);
-				}
+					Tripulacion t1 = new Piloto(nombre, apellido, edad, dni, anyosExperiencia, vuelosRealizados, nacionalidad,TipoPiloto.PRIVADO);
+					tripulacion.add(t1);
+					}	
+			}
+			rs = st.executeQuery(sql2);
+			while(rs.next()) {
+				String nombre = rs.getString("nombre");
+				String apellido = rs.getString("apellido");
+				int edad = rs.getInt("edad");
+				String dni = rs.getString("dni");
+				String nacionalidad = rs.getString("nacionalidad");
+				int anyosExperiencia = rs.getInt("anyosExp");
+				int vuelosRealizados = rs.getInt("vuelosRealizados");
+				int altura = rs.getInt("altura");
+				int peso = rs.getInt("peso");
 				
-					
+				Tripulacion t1 = new Azafata(nombre, apellido, edad, dni, anyosExperiencia, vuelosRealizados, nacionalidad, altura, peso);
+				tripulacion.add(t1);
 			}
 			
 		} catch (SQLException e) {

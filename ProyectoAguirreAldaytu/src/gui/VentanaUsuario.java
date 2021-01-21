@@ -180,7 +180,7 @@ public class VentanaUsuario extends JFrame {
 					x2 = x2 - 1;
 					lblAvion2.setLocation(x2, y2);
 					try {
-						Thread.sleep(10);
+						Thread.sleep(100);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

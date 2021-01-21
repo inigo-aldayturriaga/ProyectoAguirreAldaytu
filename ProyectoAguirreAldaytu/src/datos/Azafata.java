@@ -6,9 +6,9 @@ public class Azafata extends Tripulacion {
 	private int altura,peso;
 	
 	
-	public Azafata(String nombre, String apellido, int edad, String dni, String residencia, int anyosExperiencia,
-			int vuelosRealizados, String nacionalidad, int tipoTripulacion,int altura,int peso) {
-		super(nombre, apellido, edad, dni, anyosExperiencia, vuelosRealizados, nacionalidad, tipoTripulacion);
+	public Azafata(String nombre, String apellido, int edad, String dni, int anyosExperiencia,
+			int vuelosRealizados, String nacionalidad,int altura,int peso) {
+		super(nombre, apellido, edad, dni, anyosExperiencia, vuelosRealizados, nacionalidad);
 		this.altura = altura;
 		this.peso = peso;
 	}
@@ -29,6 +29,12 @@ public class Azafata extends Tripulacion {
 	public void setPeso(int peso) {
 		this.peso = peso;
 	}
+
+	@Override
+	public String toString() {
+		return "Azafata [altura=" + altura + ", peso=" + peso + "]";
+	}
+	
 
 
 	

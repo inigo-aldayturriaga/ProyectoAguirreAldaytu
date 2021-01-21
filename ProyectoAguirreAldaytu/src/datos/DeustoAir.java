@@ -17,10 +17,12 @@ public class DeustoAir {
 		 * Creacion de tablas
 		 */
 		BaseDeDatos.con = BaseDeDatos.inicializarBD("deustoAirport.db");
+		BaseDeDatos.reiniciarBDAzafata(BaseDeDatos.con);
+		BaseDeDatos.reiniciarBDPiloto(BaseDeDatos.con);
 		BaseDeDatos.crearTablaPasajeroBD(BaseDeDatos.con);
-		BaseDeDatos.reiniciarBDPasajero(BaseDeDatos.con);
 		BaseDeDatos.crearTablaVueloBD(BaseDeDatos.con);
-		BaseDeDatos.crearTablaTripulacionBD(BaseDeDatos.con);
+		BaseDeDatos.crearTablaPilotoBD(BaseDeDatos.con);
+		BaseDeDatos.crearTablaAzafataBD(BaseDeDatos.con);
 		
 		/**
 		 * Creamos algunos vuelos
@@ -52,13 +54,14 @@ public class DeustoAir {
 		BaseDeDatos.insertarVuelo(v5);
 		BaseDeDatos.insertarVuelo(v6);
 		
-		Piloto t1 = new Piloto("Lander", "Aguirre", 25, "79442144N",22,224,"Espanya", 0,TipoPiloto.COMERCIAL);
-		Piloto t2 = new Piloto("Iñigo", "Aldayturriaga", 22, "79442144X",22,224,"Brasil", 0,TipoPiloto.COMERCIAL);
-		Piloto t3 = new Piloto("Luigi", "Lopez", 46, "79442144J",22,224,"Portugal", 0,TipoPiloto.COMERCIAL);
-		
+		Piloto t1 = new Piloto("Lander", "Aguirre", 25, "79442144N",22,224,"Espanya",TipoPiloto.COMERCIAL);
+		Piloto t2 = new Piloto("Iñigo", "Aldayturriaga", 22, "79442144X",22,224,"Brasil",TipoPiloto.COMERCIAL);
+		Piloto t3 = new Piloto("Luigi", "Lopez", 46, "79442144J",22,224,"Portugal",TipoPiloto.COMERCIAL);
+		Azafata a = new Azafata("Carlos", "Campo", 54, "625463643J", 34, 345, "Lituania", 156, 93);
 		BaseDeDatos.insertarPiloto(t1);
 		BaseDeDatos.insertarPiloto(t2);
 		BaseDeDatos.insertarPiloto(t3);
+		BaseDeDatos.insertarAzafata(a);
 		
 	}
 	public static ArrayList<Vuelo> getVuelos() {

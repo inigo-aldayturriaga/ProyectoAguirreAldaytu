@@ -91,7 +91,7 @@ public class VentanaPiloto extends JFrame {
 					nuevoPiloto.setDni(tdni.getText());
 					nuevoPiloto.setAnyosExperiencia((Integer) spinAnyosExperiencia.getValue());
 					nuevoPiloto.setVuelosRealizados((Integer) spinVuelosRealizados.getValue());
-					nuevoPiloto.setNacionaldidad(tnacionalidad.getText());
+					nuevoPiloto.setNacionalidad(tnacionalidad.getText());
 					nuevoPiloto.setTipo((TipoPiloto) tipoPiloto.getSelectedItem());
 				}
 				VentanaBarraProgreso vh = new VentanaBarraProgreso("piloto");

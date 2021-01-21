@@ -39,6 +39,7 @@ public class VentanaPasajero extends JFrame {
 		spinEdad = new JSpinner(new SpinnerNumberModel());
 		ldni = new JLabel("DNI");
 		tdni = new JTextField(20);
+		lclase = new JLabel("Clase");
 		lnumeroBillete = new JLabel("Numero del billete");
 		spinNumeroBillete = new JSpinner(new SpinnerNumberModel());		
 		comboClase = new JComboBox<ClasePasajero>();
@@ -50,7 +51,7 @@ public class VentanaPasajero extends JFrame {
 		lcontrasenia = new JLabel("Contraseña");
 		tcontrasenia = new JTextField(20);
 		
-		
+		cancelar = new JButton("Cancelar");
 		crear = new JButton("Crear");
 		if (pasajero != null) {
 			crear.setText("Guardar datos");
@@ -65,7 +66,7 @@ public class VentanaPasajero extends JFrame {
 		}
 		
 		
-		cancelar = new JButton("Cancelar");
+		
 		
 		cancelar.addActionListener(new ActionListener() {			
 			@Override
