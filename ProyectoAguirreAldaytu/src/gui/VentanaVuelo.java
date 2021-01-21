@@ -78,20 +78,16 @@ public class VentanaVuelo extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Vuelo nuevoVuelo;
-				
-				if (vuelo != null) {
-					nuevoVuelo = vuelo;
-					nuevoVuelo.setIdAvion(tnumero.getText());
-					nuevoVuelo.setOrigen(torigen.getText());
-					nuevoVuelo.setDestino(tdestino.getText());
-					Date d1 = new Date((long) spinHoraSalida.getValue());
-					nuevoVuelo.setHoraSalida(d1);
-					Date d2 = new Date((long) spinHoraLlegada.getValue());
-					nuevoVuelo.setHoraLlegada(d2);
-					nuevoVuelo.setPuerta((Integer) spinPuerta.getValue());
-					nuevoVuelo.setObservacion(tobservacion.getText());
-					
-				}
+				nuevoVuelo = new Vuelo();
+				nuevoVuelo.setIdAvion(tnumero.getText());
+				nuevoVuelo.setOrigen(torigen.getText());
+				nuevoVuelo.setDestino(tdestino.getText());
+				Date d1 = new Date((long) spinHoraSalida.getValue());
+				nuevoVuelo.setHoraSalida(d1);
+				Date d2 = new Date((long) spinHoraLlegada.getValue());
+				nuevoVuelo.setHoraLlegada(d2);
+				nuevoVuelo.setPuerta((Integer) spinPuerta.getValue());
+				nuevoVuelo.setObservacion(tobservacion.getText());
 				VentanaBarraProgreso vh = new VentanaBarraProgreso("vuelo");
 				vh.setVisible(true);
 				dispose();

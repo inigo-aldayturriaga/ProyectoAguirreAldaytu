@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 
 import bd.BaseDeDatos;
+import datos.DeustoAir;
 import datos.Pasajero;
 
 import java.awt.GridLayout;
@@ -153,8 +154,35 @@ public class VentanaLogin extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new VentanaRecuperarContrasenia();
-				ventana.dispose();
+				boolean existe = false;
+				Pasajero p1 = new Pasajero();
+				String nombre = tfNombre.getText();
+				if(!tfNombre.getText().isEmpty()) {
+					for (Pasajero p : DeustoAir.getPasajeros()) {
+						if(p.getNombre().contentEquals(nombre)) {
+							existe = true;
+							p1 = p;
+							break;
+						}
+					}
+					if (existe) {
+						String nuevacontrasenia = JOptionPane.showInputDialog("Introduce una nueva contraseña: ");
+						String nuevacontrasenia2 = JOptionPane.showInputDialog("Vuelve a introducir la nueva contraseña: ");
+						if(nuevacontrasenia.contentEquals(nuevacontrasenia2)) {
+							p1.setContrasenia(nuevacontrasenia);
+							BaseDeDatos.modificarPasajero(p1, nuevacontrasenia);
+							return;
+						}else {
+							JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
+							return;
+						}
+					}else {
+						JOptionPane.showMessageDialog(null, "El nombre no está en la base de datos");
+						return;
+					}
+				}else {
+					JOptionPane.showMessageDialog(null, "Introduce tu nombre para ver si estas en el sistema");
+				}
 			}
 		});	
 	}

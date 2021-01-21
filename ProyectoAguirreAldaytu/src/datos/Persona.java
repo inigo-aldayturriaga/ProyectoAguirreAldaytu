@@ -15,6 +15,9 @@ public abstract class Persona {
 		this.edad = edad;
 		this.dni = dni;
 	}
+	public Persona() {
+		
+	}
 	public Persona(String nombre) {
 		this.nombre = nombre;
 	}

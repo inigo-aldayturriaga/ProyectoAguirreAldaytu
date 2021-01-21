@@ -3,6 +3,8 @@ package gui;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
+import bd.BaseDeDatos;
 import datos.Persona;
 import datos.Azafata;
 import datos.Tripulacion;
@@ -73,7 +75,8 @@ public class VentanaAzafata extends JFrame {
 		cancelar.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();				
+				dispose();
+				new VentanaPrincipal();
 			}
 		});
 		
@@ -81,20 +84,17 @@ public class VentanaAzafata extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Azafata nueva;
-				//si ya hay un jugador hecho cogera los atributos de ese jugador, sino creara un nuevo jugador
-				if (azafata != null) {
-					nueva = azafata;
-					nueva.setNombre(tnombre.getText());
-					nueva.setApellido(tapellido.getText());
-					nueva.setEdad((Integer) spinEdad.getValue());
-					nueva.setDni(tdni.getText());
-					nueva.setAnyosExperiencia((Integer) spinAnyosExperiencia.getValue());
-					nueva.setVuelosRealizados((Integer) spinVuelosRealizados.getValue());
-					nueva.setNacionalidad(tnacionalidad.getText());
-					nueva.setAltura((Integer) spinAltura.getValue());
-					nueva.setPeso((Integer) spinPeso.getValue());
-
-				}
+				nueva = new Azafata();
+				nueva.setNombre(tnombre.getText());
+				nueva.setApellido(tapellido.getText());
+				nueva.setEdad((Integer) spinEdad.getValue());
+				nueva.setDni(tdni.getText());
+				nueva.setAnyosExperiencia((Integer) spinAnyosExperiencia.getValue());
+				nueva.setVuelosRealizados((Integer) spinVuelosRealizados.getValue());
+				nueva.setNacionalidad(tnacionalidad.getText());
+				nueva.setAltura((Integer) spinAltura.getValue());
+				nueva.setPeso((Integer) spinPeso.getValue());
+				BaseDeDatos.insertarAzafata(nueva);
 				VentanaBarraProgreso vh = new VentanaBarraProgreso("azafata");
 				vh.setVisible(true);
 				dispose();

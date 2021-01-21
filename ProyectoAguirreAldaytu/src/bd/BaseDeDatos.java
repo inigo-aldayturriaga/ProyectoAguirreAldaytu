@@ -417,6 +417,17 @@ public class BaseDeDatos {
 		return pasajeros;
 		
 	}
+	public static void modificarPasajero(Pasajero p,String nuevacontrasenia) {
+		String sql = "UPDATE Pasajero set contrasenia = '"+nuevacontrasenia+"' where dni = '"+p.getDni()+"'";
+		con = inicializarBD("deustoAirport.db");
+		try {
+			st = con.createStatement();
+			st.executeUpdate(sql);
+			cerrarBD(con, st);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+	}
 	
 	public static void modificarVuelo(String a, String b, String c, String d, String e) {
 		String sql = "UPDATE Vuelo SET idAvion='"+a+"',origen="+b+"',destino='"+c+"',horaSalida="+d+",horaLlegada="+e;     

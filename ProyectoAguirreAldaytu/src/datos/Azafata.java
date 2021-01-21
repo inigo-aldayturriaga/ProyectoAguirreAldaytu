@@ -13,6 +13,10 @@ public class Azafata extends Tripulacion {
 		this.peso = peso;
 	}
 
+	public Azafata() {
+		// TODO Auto-generated constructor stub
+	}
+
 	//Getters y setters
 	public int getAltura() {
 		return altura;

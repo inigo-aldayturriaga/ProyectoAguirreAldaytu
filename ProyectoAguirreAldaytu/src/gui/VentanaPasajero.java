@@ -2,8 +2,13 @@ package gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
+
+import bd.BaseDeDatos;
 import datos.ClasePasajero;
+import datos.DeustoAir;
 import datos.Pasajero;
 
 
@@ -11,6 +16,7 @@ import datos.Pasajero;
 
 
 public class VentanaPasajero extends JFrame {
+
 	
 	JLabel lnombre;
 	JTextField tnombre;
@@ -53,6 +59,7 @@ public class VentanaPasajero extends JFrame {
 		
 		cancelar = new JButton("Cancelar");
 		crear = new JButton("Crear");
+		
 		if (pasajero != null) {
 			crear.setText("Guardar datos");
 			tnombre.setText(pasajero.getNombre());
@@ -79,17 +86,15 @@ public class VentanaPasajero extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Pasajero nuevoPasajero;
-				
-				if (pasajero != null) {
-					nuevoPasajero = pasajero;
-					nuevoPasajero.setNombre(tnombre.getText());
-					nuevoPasajero.setApellido(tapellido.getText());
-					nuevoPasajero.setEdad((Integer) spinEdad.getValue());
-					nuevoPasajero.setDni(tdni.getText());
-					nuevoPasajero.setNumeroBillete((Integer) spinNumeroBillete.getValue());
-					nuevoPasajero.setClase((ClasePasajero) comboClase.getSelectedItem());
-					nuevoPasajero.setContrasenia(tcontrasenia.getText());
-				}
+				nuevoPasajero = new Pasajero();
+				nuevoPasajero.setNombre(tnombre.getText());
+				nuevoPasajero.setApellido(tapellido.getText());
+				nuevoPasajero.setEdad((Integer) spinEdad.getValue());
+				nuevoPasajero.setDni(tdni.getText());
+				nuevoPasajero.setNumeroBillete((Integer) spinNumeroBillete.getValue());
+				nuevoPasajero.setClase((ClasePasajero) comboClase.getSelectedItem());
+				nuevoPasajero.setContrasenia(tcontrasenia.getText());
+				BaseDeDatos.insertarPasajero(nuevoPasajero);
 				VentanaBarraProgreso vh = new VentanaBarraProgreso("pasajero");
 				vh.setVisible(true);
 				dispose();

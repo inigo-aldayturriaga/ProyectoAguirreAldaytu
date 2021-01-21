@@ -11,6 +11,8 @@ import datos.TipoPiloto;
 
 import javax.swing.*;
 
+import bd.BaseDeDatos;
+
 public class VentanaPiloto extends JFrame {
 	JLabel lnombre;
 	JTextField tnombre;
@@ -31,12 +33,12 @@ public class VentanaPiloto extends JFrame {
     JButton cancelar;
     Piloto piloto;
     
-	
-
-    
     public VentanaPiloto() {
-    	
-    
+    	//personalizamos la ventana con el titulo, dimensiones,distribucion...y la hacemos visible y se cerrará la ventana si queremos salir de ella
+    	setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+ 		setTitle("Añadir nuevo piloto");
+ 		setSize(500, 500);
+ 
     	lnombre = new JLabel("Nombre");
 		tnombre = new JTextField(20);
 		lapellido = new JLabel("Apellido");
@@ -56,6 +58,7 @@ public class VentanaPiloto extends JFrame {
 		tipoPiloto.addItem(TipoPiloto.PRIVADO);
 
 		crear = new JButton("Crear");
+		cancelar = new JButton("Cancelar");
 		
 		if (piloto != null) {
 			crear.setText("Guardar datos");
@@ -70,30 +73,27 @@ public class VentanaPiloto extends JFrame {
 			
 		}
 		
-		cancelar = new JButton("Cancelar");
-		
 		cancelar.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();				
+				dispose();
+				new VentanaPrincipal();
 			}
 		});
 		crear.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Piloto nuevoPiloto;
-				
-				if (piloto != null) {
-					nuevoPiloto = piloto;
-					nuevoPiloto.setNombre(tnombre.getText());
-					nuevoPiloto.setApellido(tapellido.getText());
-					nuevoPiloto.setEdad((Integer) spinEdad.getValue());
-					nuevoPiloto.setDni(tdni.getText());
-					nuevoPiloto.setAnyosExperiencia((Integer) spinAnyosExperiencia.getValue());
-					nuevoPiloto.setVuelosRealizados((Integer) spinVuelosRealizados.getValue());
-					nuevoPiloto.setNacionalidad(tnacionalidad.getText());
-					nuevoPiloto.setTipo((TipoPiloto) tipoPiloto.getSelectedItem());
-				}
+				nuevoPiloto = new Piloto();
+				nuevoPiloto.setNombre(tnombre.getText());
+				nuevoPiloto.setApellido(tapellido.getText());
+				nuevoPiloto.setEdad((Integer) spinEdad.getValue());
+				nuevoPiloto.setDni(tdni.getText());
+				nuevoPiloto.setAnyosExperiencia((Integer) spinAnyosExperiencia.getValue());
+				nuevoPiloto.setVuelosRealizados((Integer) spinVuelosRealizados.getValue());
+				nuevoPiloto.setNacionalidad(tnacionalidad.getText());
+				nuevoPiloto.setTipo((TipoPiloto) tipoPiloto.getSelectedItem());
+				BaseDeDatos.insertarPiloto(nuevoPiloto);
 				VentanaBarraProgreso vh = new VentanaBarraProgreso("piloto");
 				vh.setVisible(true);
 				dispose();
@@ -121,10 +121,7 @@ public class VentanaPiloto extends JFrame {
 		add(cancelar);
 		
 		
-		//personalizamos la ventana con el titulo, dimensiones,distribucion...y la hacemos visible y se cerrará la ventana si queremos salir de ella
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setTitle("Añadir nuevo piloto");
-		setSize(500, 500);
+		
 		setVisible(true);
 		
     

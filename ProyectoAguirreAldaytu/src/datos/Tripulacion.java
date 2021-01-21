@@ -13,6 +13,9 @@ public abstract class Tripulacion extends Persona {
 		super(nombre, apellido, edad, dni);
 		// TODO Auto-generated constructor stub
 	}
+	public Tripulacion() {
+		
+	}
 
 
 	public Tripulacion(String nombre, String apellido, int edad, String dni,int anyosExperiencia,int vuelosRealizados,String nacionalidad) {

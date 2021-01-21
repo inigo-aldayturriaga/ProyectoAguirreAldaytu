@@ -11,14 +11,13 @@ public class DeustoAir {
 	/**
 	 * Clase Contenedora
 	 */
+	static ArrayList<Pasajero> pasajeros;
 	public static Connection con = BaseDeDatos.inicializarBD("deustoAirport.db");
 	public DeustoAir() {
 		/**
 		 * Creacion de tablas
 		 */
 		BaseDeDatos.con = BaseDeDatos.inicializarBD("deustoAirport.db");
-		BaseDeDatos.reiniciarBDAzafata(BaseDeDatos.con);
-		BaseDeDatos.reiniciarBDPiloto(BaseDeDatos.con);
 		BaseDeDatos.crearTablaPasajeroBD(BaseDeDatos.con);
 		BaseDeDatos.crearTablaVueloBD(BaseDeDatos.con);
 		BaseDeDatos.crearTablaPilotoBD(BaseDeDatos.con);
@@ -73,8 +72,12 @@ public class DeustoAir {
 		return tripulacion;
 	}
 	public static ArrayList<Pasajero> getPasajeros() {
-		ArrayList<Pasajero> pasajeros = BaseDeDatos.obtenerArrayDePasajeros();
+		pasajeros = BaseDeDatos.obtenerArrayDePasajeros();
 		return pasajeros;
+	}
+	public static void anyadePasajero(Pasajero p) {
+		pasajeros.add(p);
+		
 	}
 
 }

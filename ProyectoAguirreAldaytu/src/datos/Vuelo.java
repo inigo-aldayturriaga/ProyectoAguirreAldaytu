@@ -127,6 +127,11 @@ public class Vuelo {
 		this.puerta = puerta;
 	}
 
+	public Vuelo() {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	@Override
 	public String toString() {
 		return   idAvion + "," + origen + "," + destino + ",Puerta =" + puerta

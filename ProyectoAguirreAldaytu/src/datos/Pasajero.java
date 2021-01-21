@@ -19,6 +19,10 @@ public class Pasajero extends Persona {
 	}
 		
 	
+	public Pasajero() {
+		// TODO Auto-generated constructor stub
+	}
+
 	//Getters y setters
 	public int getNumeroBillete() {
 		return numeroBillete;
