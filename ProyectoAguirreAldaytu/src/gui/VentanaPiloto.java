@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -123,6 +124,10 @@ public class VentanaPiloto extends JFrame {
 		
 		
 		setVisible(true);
+		Color color1 = new Color(48, 163, 255);
+		Color color2 = new Color(14,105,179);
+		crear.setBackground(color1);
+		cancelar.setBackground(color2);
 		
     
     }

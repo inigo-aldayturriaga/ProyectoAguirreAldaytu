@@ -79,7 +79,7 @@ public class VentanaPrincipal extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new VentanaPasajero();
-				
+				ventana.dispose();
 			}
 		});
 		nuevoPiloto.addActionListener(new ActionListener() {

@@ -120,6 +120,10 @@ public class VentanaVuelo extends JFrame{
 		setTitle("Añadir nuevo vuelo");
 		setSize(500, 500);
 		setVisible(true);
+		Color color1 = new Color(48, 163, 255);
+		Color color2 = new Color(14,105,179);
+		crear.setBackground(color1);
+		cancelar.setBackground(color2);
 				
     }
 
