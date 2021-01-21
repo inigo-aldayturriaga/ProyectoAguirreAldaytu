@@ -20,7 +20,8 @@ public class VentanaRecuperarContrasenia extends JFrame {
 		 * Dimensiones
 		 */
 		JFrame ventana = this;
-		ventana.setBounds(0,0,600,400);
+		//ventana.setBounds(0,0,600,400);
+		setSize(500, 500);
 		ventana.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		ventana.setTitle("VENTANA RECUPERAR CONTRASEÑA");
 		/**

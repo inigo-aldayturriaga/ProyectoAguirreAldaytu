@@ -34,13 +34,13 @@ public class VentanaAsignarPasajeros extends JFrame {
 		 * Estructura ventana
 		 */
 		JFrame ventana = this;
-		setSize(1200, 600);
+		setSize(500, 500);
 		pCentro = new JPanel();
 		pCentro.setLayout(new GridLayout(1, 3, 0, 0));
 		pSur = new JPanel();
 		sc = new JScrollPane();
 		sc.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		bAniadir = new JButton("Aniadir");
+		bAniadir = new JButton("Añadir");
 		bVolver = new JButton("Volver");
 		/**
 		 * Creamos los diferentes componentes

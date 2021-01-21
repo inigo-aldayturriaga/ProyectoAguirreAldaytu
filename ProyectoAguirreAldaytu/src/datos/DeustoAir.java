@@ -52,13 +52,13 @@ public class DeustoAir {
 		BaseDeDatos.insertarVuelo(v5);
 		BaseDeDatos.insertarVuelo(v6);
 		
-		Tripulacion t1 = new Piloto("Lander", "Aguirre", 25, "79442144N",22,224,"Espanya", 0,TipoPiloto.COMERCIAL);
-		Tripulacion t2 = new Piloto("Iñigo", "Aldayturriaga", 22, "79442144X",22,224,"Brasil", 0,TipoPiloto.COMERCIAL);
-		Tripulacion t3 = new Piloto("Luigi", "Lopez", 46, "79442144J",22,224,"Portugal", 0,TipoPiloto.COMERCIAL);
+		Piloto t1 = new Piloto("Lander", "Aguirre", 25, "79442144N",22,224,"Espanya", 0,TipoPiloto.COMERCIAL);
+		Piloto t2 = new Piloto("Iñigo", "Aldayturriaga", 22, "79442144X",22,224,"Brasil", 0,TipoPiloto.COMERCIAL);
+		Piloto t3 = new Piloto("Luigi", "Lopez", 46, "79442144J",22,224,"Portugal", 0,TipoPiloto.COMERCIAL);
 		
-		BaseDeDatos.insertarTripulacion(t1);
-		BaseDeDatos.insertarTripulacion(t2);
-		BaseDeDatos.insertarTripulacion(t3);
+		BaseDeDatos.insertarPiloto(t1);
+		BaseDeDatos.insertarPiloto(t2);
+		BaseDeDatos.insertarPiloto(t3);
 		
 	}
 	public static ArrayList<Vuelo> getVuelos() {

@@ -32,7 +32,8 @@ public class VentanaLogin extends JFrame {
 		 * Dimensiones
 		 */
 		JFrame ventana = this;
-		ventana.setBounds(0,0,600,400);
+		//ventana.setBounds(0,0,600,400);
+		setSize(500, 500);
 		ventana.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		ventana.setTitle("VENTANA LOGIN");
 		Color color1 = new Color(48, 163, 255);

@@ -5,8 +5,8 @@ import java.awt.event.*;
 import javax.swing.*;
 import datos.ClasePasajero;
 import datos.Pasajero;
-import datos.Piloto;
-import datos.TipoPiloto;
+
+
 
 
 
@@ -28,9 +28,9 @@ public class VentanaPasajero extends JFrame {
 	JTextField tcontrasenia;
     JButton crear;
     JButton cancelar;
-    
+    Pasajero pasajero;
 
-    public VentanaPasajero(Pasajero pasajero) {
+    public VentanaPasajero() {
     	lnombre = new JLabel("Nombre");
 		tnombre = new JTextField(20);
 		lapellido = new JLabel("Apellido");
@@ -89,6 +89,10 @@ public class VentanaPasajero extends JFrame {
 					nuevoPasajero.setClase((ClasePasajero) comboClase.getSelectedItem());
 					nuevoPasajero.setContrasenia(tcontrasenia.getText());
 				}
+				VentanaBarraProgreso vh = new VentanaBarraProgreso("pasajero");
+				vh.setVisible(true);
+				dispose();
+			
 			}
 		});
 		
@@ -116,7 +120,7 @@ public class VentanaPasajero extends JFrame {
 		//personalizamos la ventana con el titulo, dimensiones,distribucion...y la hacemos visible y se cerrará la ventana si queremos salir de ella
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("Añadir nuevo pasajero");
-		pack();
+		setSize(500, 500);
 		setVisible(true);
     }
     

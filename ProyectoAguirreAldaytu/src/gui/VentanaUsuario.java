@@ -51,7 +51,7 @@ public class VentanaUsuario extends JFrame {
 	
 	public VentanaUsuario () {
 		super();
-		setSize(800, 600);
+		setSize(500, 500);
 		pCentro = new JPanel();
 		gridlayout = new GridLayout(2,1);
 		pCentro.setLayout(gridlayout);

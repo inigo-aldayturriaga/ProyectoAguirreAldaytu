@@ -29,8 +29,9 @@ public class VentanaVuelo extends JFrame{
     JTextField tobservacion;
     JButton crear;
 	JButton cancelar;
+	Vuelo vuelo;
     
-    public VentanaVuelo(Vuelo vuelo) {
+    public VentanaVuelo() {
     	lnumero = new JLabel("ID del avión");
     	tnumero = new JTextField(20);
 		lorigen = new JLabel("Origen");
@@ -91,10 +92,13 @@ public class VentanaVuelo extends JFrame{
 					nuevoVuelo.setObservacion(tobservacion.getText());
 					
 				}
+				VentanaBarraProgreso vh = new VentanaBarraProgreso("vuelo");
+				vh.setVisible(true);
+				dispose();
 			}
 		});
     
-		this.setLayout(new GridLayout(8, 2));
+		this.setLayout(new GridLayout(10, 2));
 		//añadimos las etiquetas, spinners y combobox a la ventana
 		add(lnumero);
 		add(tnumero);
@@ -118,7 +122,7 @@ public class VentanaVuelo extends JFrame{
 		//personalizamos la ventana con el titulo, dimensiones,distribucion...y la hacemos visible y se cerrará la ventana si queremos salir de ella
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("Añadir nuevo vuelo");
-		pack();
+		setSize(500, 500);
 		setVisible(true);
 				
     }

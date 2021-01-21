@@ -29,11 +29,12 @@ public class VentanaPiloto extends JFrame {
 	JComboBox<TipoPiloto> tipoPiloto;
     JButton crear;
     JButton cancelar;
+    Piloto piloto;
     
 	
 
     
-    public VentanaPiloto(Piloto piloto) {
+    public VentanaPiloto() {
     	
     
     	lnombre = new JLabel("Nombre");
@@ -93,6 +94,9 @@ public class VentanaPiloto extends JFrame {
 					nuevoPiloto.setNacionaldidad(tnacionalidad.getText());
 					nuevoPiloto.setTipo((TipoPiloto) tipoPiloto.getSelectedItem());
 				}
+				VentanaBarraProgreso vh = new VentanaBarraProgreso("piloto");
+				vh.setVisible(true);
+				dispose();
 			}
 		});
 		
@@ -120,7 +124,7 @@ public class VentanaPiloto extends JFrame {
 		//personalizamos la ventana con el titulo, dimensiones,distribucion...y la hacemos visible y se cerrará la ventana si queremos salir de ella
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("Añadir nuevo piloto");
-		pack();
+		setSize(500, 500);
 		setVisible(true);
 		
     

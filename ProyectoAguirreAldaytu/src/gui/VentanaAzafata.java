@@ -30,8 +30,9 @@ public class VentanaAzafata extends JFrame {
     JSpinner spinPeso;
     JButton crear;
     JButton cancelar;
+    Azafata azafata;
     
-    public VentanaAzafata(Azafata azafata) {
+    public VentanaAzafata() {
     	lnombre = new JLabel("Nombre");
 		tnombre = new JTextField(20);
 		lapellido = new JLabel("Apellido");
@@ -92,16 +93,16 @@ public class VentanaAzafata extends JFrame {
 					nueva.setNacionaldidad(tnacionalidad.getText());
 					nueva.setAltura((Integer) spinAltura.getValue());
 					nueva.setPeso((Integer) spinPeso.getValue());
-				
-				
-				
-				
+
 				}
+				VentanaBarraProgreso vh = new VentanaBarraProgreso("azafata");
+				vh.setVisible(true);
+				dispose();
 			}
 		});
 
 		
-		this.setLayout(new GridLayout(5, 2));
+		this.setLayout(new GridLayout(10, 2));
 		//añadimos las etiquetas, spinners y combobox a la ventana
 		add(lnombre);
 		add(tnombre);
@@ -128,7 +129,7 @@ public class VentanaAzafata extends JFrame {
 		//personalizamos la ventana con el titulo, dimensiones,distribucion...y la hacemos visible y se cerrará la ventana si queremos salir de ella
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("Añadir nueva azafata");
-		pack();
+		setSize(500, 500);
 		setVisible(true);
     }
 	

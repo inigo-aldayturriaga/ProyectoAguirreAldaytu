@@ -177,9 +177,9 @@ public class BaseDeDatos {
 	/**
 	 * Metodo para insertar personas que se pueden logear
 	 */
-	public static void insertarPasajero(Pasajero p) {
-		String s = "INSERT INTO Pasajero VALUES('"+p.getNombre()+"','"+p.getApellido()+"',"+p.getEdad()+",'"+p.getDni()+"',"+p.getNumeroBillete()+",'"+p.getContrasenia()+"')";
-		String sql = "SELECT dni FROM Pasajero WHERE dni= '"+p.getDni()+"'";
+	public static void insertarPasajero(Pasajero nuevoPasajero) {
+		String s = "INSERT INTO Pasajero VALUES('"+nuevoPasajero.getNombre()+"','"+nuevoPasajero.getApellido()+"',"+nuevoPasajero.getEdad()+",'"+nuevoPasajero.getDni()+"',"+nuevoPasajero.getNumeroBillete()+",'"+nuevoPasajero.getContrasenia()+"')";
+		String sql = "SELECT dni FROM Pasajero WHERE dni= '"+nuevoPasajero.getDni()+"'";
 		con = BaseDeDatos.inicializarBD("deustoAirport.db");
 		ResultSet rs = null;
 		try {
@@ -195,9 +195,9 @@ public class BaseDeDatos {
 	* Metodo para insertar vuelos en la base de datos
 	*/
 	}
-	public static void insertarVuelo(Vuelo v) {
-		String s = "INSERT INTO Vuelo VALUES("+v.getHoraSalida().getTime()+",'"+v.getIdAvion()+"','"+v.getDestino()+"',"+v.getHoraLlegada().getTime()+","+v.getPuerta()+",'"+v.getObservacion()+"')";
-		String sql = "SELECT * FROM Vuelo WHERE idAvion ='"+v.getIdAvion()+"'";
+	public static void insertarVuelo(Vuelo nuevoVuelo) {
+		String s = "INSERT INTO Vuelo VALUES("+nuevoVuelo.getHoraSalida().getTime()+",'"+nuevoVuelo.getIdAvion()+"','"+nuevoVuelo.getDestino()+"',"+nuevoVuelo.getHoraLlegada().getTime()+","+nuevoVuelo.getPuerta()+",'"+nuevoVuelo.getObservacion()+"')";
+		String sql = "SELECT * FROM Vuelo WHERE idAvion ='"+nuevoVuelo.getIdAvion()+"'";
 		ResultSet rs = null;
 		con = inicializarBD("deustoAirport.db");
 		try {
@@ -211,9 +211,25 @@ public class BaseDeDatos {
 		}
 		
 	}
-	public static void insertarTripulacion(Tripulacion t) {
-		String s = "INSERT INTO Tripulacion VALUES("+t.getTipoTripulacion()+",'"+t.getNombre()+"','"+t.getApellido()+"',"+t.getEdad()+",'"+t.getDni()+"','"+t.getNacionalidad()+"',"+t.getAnyosExperiencia()+","+t.getVuelosRealizados()+")";    
-		String sql = "SELECT * FROM Tripulacion WHERE dni ='"+t.getDni()+"'";
+	public static void insertarPiloto(Piloto nuevoPiloto) {
+		String s = "INSERT INTO Tripulacion VALUES("+nuevoPiloto.getTipoTripulacion()+",'"+nuevoPiloto.getNombre()+"','"+nuevoPiloto.getApellido()+"',"+nuevoPiloto.getEdad()+",'"+nuevoPiloto.getDni()+"','"+nuevoPiloto.getNacionalidad()+"',"+nuevoPiloto.getAnyosExperiencia()+","+nuevoPiloto.getVuelosRealizados()+"',"+nuevoPiloto.getTipo()+")";    
+		String sql = "SELECT * FROM Tripulacion WHERE dni ='"+nuevoPiloto.getDni()+"'";
+		con = inicializarBD("deustoAirport.db");
+		ResultSet rs = null;
+		try {
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
+			if (!rs.next())
+				st.executeUpdate(s);
+			cerrarBD(con, st);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	public static void insertarAzafata(Azafata nueva) {
+		String s = "INSERT INTO Tripulacion VALUES("+nueva.getTipoTripulacion()+",'"+nueva.getNombre()+"','"+nueva.getApellido()+"',"+nueva.getEdad()+",'"+nueva.getDni()+"','"+nueva.getNacionalidad()+"',"+nueva.getAnyosExperiencia()+","+nueva.getVuelosRealizados()+"',"+nueva.getAltura()+","+nueva.getPeso()+")"; 
+		String sql = "SELECT * FROM Tripulacion WHERE dni ='"+nueva.getDni()+"'";
 		con = inicializarBD("deustoAirport.db");
 		ResultSet rs = null;
 		try {

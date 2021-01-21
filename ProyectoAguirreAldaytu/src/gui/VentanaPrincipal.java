@@ -8,6 +8,10 @@ import javax.swing.*;
 
 import bd.BaseDeDatos;
 import datos.DeustoAir;
+import gui.VentanaAzafata;
+import gui.VentanaPasajero;
+import gui.VentanaPiloto;
+import gui.VentanaVuelo;
 
 
 public class VentanaPrincipal extends JFrame {
@@ -16,7 +20,7 @@ public class VentanaPrincipal extends JFrame {
 	JMenu pasajeros;//Dentro de la barra un menu pasajeros
 	JMenu tripulacion;//Dentro de la barra un menu tripulacion
 	JMenu vuelos;//Dentro de la barra un menu vuelos
-	JMenuItem asignacionTripulacion,asignacionPasajeros;
+	JMenuItem asignacionTripulacion,asignacionPasajeros,nuevoVuelo,nuevoPasajero,nuevoPiloto,nuevaAzafata;
 	
 	public VentanaPrincipal() {
 		JFrame ventana = this;
@@ -25,21 +29,29 @@ public class VentanaPrincipal extends JFrame {
 		pasajeros = new JMenu("Pasajeros del avión");
 		tripulacion = new JMenu("Tripulación del vuelo");
 		vuelos = new JMenu("Vuelos del aeropuerto");
-		asignacionTripulacion = new JMenuItem("Asignar Tripulacion");
-		asignacionPasajeros = new JMenuItem("Asignar Pasajeros");
+		asignacionTripulacion = new JMenuItem("Asignar tripulacion");
+		asignacionPasajeros = new JMenuItem("Asignar pasajeros");
+		nuevoVuelo = new JMenuItem("Añadir nuevo vuelo");
+		nuevoPasajero = new JMenuItem("Añadir nuevo pasajero");
+		nuevoPiloto = new JMenuItem("Añadir nuevo piloto");
+		nuevaAzafata = new JMenuItem("Añadir nueva azafata");
 		
 		//Añadimos a la barra los diferentes menus y al menu tripulacion los items pilotos y azafatas
 		barra.add(pasajeros);
 		barra.add(tripulacion);
 		barra.add(vuelos);
 		pasajeros.add(asignacionPasajeros);
+		pasajeros.add(nuevoPasajero);
 		tripulacion.add(asignacionTripulacion);
+		tripulacion.add(nuevoPiloto);
+		tripulacion.add(nuevaAzafata);
+		vuelos.add(nuevoVuelo);
 		
 		this.setJMenuBar(barra);
 		//Personalizamos la ventana y la hacemos visible
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("Deusto Airport");
-		setSize(900, 900);
+		setSize(500, 500);
 		asignacionPasajeros.addActionListener(new ActionListener() {
 			
 			@Override
@@ -58,7 +70,42 @@ public class VentanaPrincipal extends JFrame {
 				
 			}
 		});
+		
+		nuevoPasajero.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new VentanaPasajero();
+				
+			}
+		});
+		nuevoPiloto.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new VentanaPiloto();	
+				ventana.dispose();
+			}		
+		});
+		nuevaAzafata.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new VentanaAzafata();
+				ventana.dispose();
+			}		
+		});
+		nuevoVuelo.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new VentanaVuelo();		
+				ventana.dispose();
+			}		
+		});
+		
 		setVisible(true);
+		
 	}
 	//Main
 	public static void main(String[] args) {
