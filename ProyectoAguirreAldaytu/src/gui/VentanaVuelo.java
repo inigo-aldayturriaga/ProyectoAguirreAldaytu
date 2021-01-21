@@ -1,10 +1,16 @@
 package gui;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.*;
 
+import bd.BaseDeDatos;
+import datos.Pasajero;
+import datos.Tripulacion;
 import datos.Vuelo;
 
 public class VentanaVuelo extends JFrame{
@@ -16,13 +22,9 @@ public class VentanaVuelo extends JFrame{
     JLabel ldestino;
     JTextField tdestino;
     JLabel lhoraSalida;
-    JSpinner spinHoraSalida;
+    JTextField txtHoraSalida;
     JLabel lhoraLlegada;
-    JSpinner spinHoraLlegada;
-    JLabel lnumeroPasajeros;
-    JSpinner spinNumeroPasajeros;
-    JLabel lnumeroMaxPasajeros;
-    JSpinner spinNumeroMaxPasajeros;
+    JTextField txtHoraLlegada;
     JLabel lpuerta;
     JSpinner spinPuerta;
     JLabel lobservacion;
@@ -30,20 +32,18 @@ public class VentanaVuelo extends JFrame{
     JButton crear;
 	JButton cancelar;
 	Vuelo vuelo;
-    
+    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
     public VentanaVuelo() {
     	lnumero = new JLabel("ID del avión");
     	tnumero = new JTextField(20);
 		lorigen = new JLabel("Origen");
 		torigen = new JTextField(20);
-		ldestino = new JLabel("Apellido");
+		ldestino = new JLabel("Destino");
 		tdestino = new JTextField(20);
 		lhoraSalida = new JLabel("Hora de salida");
-		spinHoraSalida = new JSpinner(new SpinnerNumberModel());
+		txtHoraSalida = new JTextField(20);
 		lhoraLlegada = new JLabel("Hora de llegada");
-		spinHoraLlegada = new JSpinner(new SpinnerNumberModel());
-		lnumeroPasajeros = new JLabel("Lista de pasajeros");
-		spinNumeroPasajeros = new JSpinner(new SpinnerNumberModel());
+		txtHoraLlegada = new JTextField(20);
 		lpuerta = new JLabel("Numero puerta de embarque");
 		spinPuerta = new JSpinner(new SpinnerNumberModel());
 		lobservacion = new JLabel("Observacion");
@@ -55,9 +55,8 @@ public class VentanaVuelo extends JFrame{
 			tnumero.setText(vuelo.getIdAvion());
 			torigen.setText(vuelo.getOrigen());
 			tdestino.setText(vuelo.getDestino());
-			spinHoraSalida.setValue(vuelo.getHoraSalida());
-			spinHoraLlegada.setValue(vuelo.getHoraLlegada());
-			spinNumeroPasajeros.setValue(vuelo.getListaPasajeros());
+			txtHoraSalida.setText(sdf.format(vuelo.getHoraSalida()));
+			txtHoraLlegada.setText(sdf.format(vuelo.getHoraLlegada()));
 			spinPuerta.setValue(vuelo.getPuerta());
 			tobservacion.setText(vuelo.getObservacion());
 			
@@ -70,27 +69,45 @@ public class VentanaVuelo extends JFrame{
 		cancelar.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();				
+				dispose();
+				new VentanaPrincipal();
 			}
 		});
 		
 		crear.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Vuelo nuevoVuelo;
-				nuevoVuelo = new Vuelo();
-				nuevoVuelo.setIdAvion(tnumero.getText());
-				nuevoVuelo.setOrigen(torigen.getText());
-				nuevoVuelo.setDestino(tdestino.getText());
-				Date d1 = new Date((long) spinHoraSalida.getValue());
-				nuevoVuelo.setHoraSalida(d1);
-				Date d2 = new Date((long) spinHoraLlegada.getValue());
-				nuevoVuelo.setHoraLlegada(d2);
-				nuevoVuelo.setPuerta((Integer) spinPuerta.getValue());
-				nuevoVuelo.setObservacion(tobservacion.getText());
-				VentanaBarraProgreso vh = new VentanaBarraProgreso("vuelo");
-				vh.setVisible(true);
+				/**
+				 * Por defecto cuando creamos ambas listas están vacias
+				 */
+				
+					try {
+						Vuelo nuevoVuelo;
+						nuevoVuelo = new Vuelo();
+						nuevoVuelo.setIdAvion(tnumero.getText());
+						nuevoVuelo.setOrigen(torigen.getText());
+						nuevoVuelo.setDestino(tdestino.getText());
+						Date d1 = sdf.parse(txtHoraLlegada.getText());
+						nuevoVuelo.setHoraSalida(d1);
+						Date d2 = sdf.parse(txtHoraSalida.getText());
+						nuevoVuelo.setHoraLlegada(d2);
+						nuevoVuelo.setPuerta((Integer) spinPuerta.getValue());
+						nuevoVuelo.setObservacion(tobservacion.getText());
+						ArrayList<Pasajero> listaPasajeros = new ArrayList<Pasajero>();
+						ArrayList<Tripulacion> listaTripulacion = new ArrayList<Tripulacion>();
+						nuevoVuelo.setListaPasajeros(listaPasajeros);
+	
+						nuevoVuelo.setListaTripulacion(listaTripulacion);
+						BaseDeDatos.insertarVuelo(nuevoVuelo);
+						VentanaBarraProgreso vh = new VentanaBarraProgreso("vuelo");
+						vh.setVisible(true);
+					} catch (ParseException e1) {
+						
+						JOptionPane.showMessageDialog(null, "ERROR!! El formato de la hora no es correcto");
+					}
+		
 				dispose();
+				new VentanaPrincipal();
 			}
 		});
     
@@ -103,11 +120,9 @@ public class VentanaVuelo extends JFrame{
 		add(ldestino);
 		add(tdestino);
 		add(lhoraSalida);
-		add(spinHoraSalida);
+		add(txtHoraSalida);
 		add(lhoraLlegada);
-		add(spinHoraLlegada);
-		add(lnumeroPasajeros);
-		add(spinNumeroPasajeros);
+		add(txtHoraLlegada);
 		add(lpuerta);
 		add(spinPuerta);
 		add(lobservacion);

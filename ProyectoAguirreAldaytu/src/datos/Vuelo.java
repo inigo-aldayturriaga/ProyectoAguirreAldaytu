@@ -21,7 +21,7 @@ public class Vuelo {
 	//Getters y setters
 	
 	
-	public static void añadirPasajeros(Pasajero p,ArrayList<Pasajero> listaPasajero) {
+	public static void aniadirPasajeros(Pasajero p,ArrayList<Pasajero> listaPasajero) {
 		listaPasajero.add(p);
 		
 	}

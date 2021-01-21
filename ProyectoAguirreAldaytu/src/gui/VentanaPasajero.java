@@ -78,7 +78,8 @@ public class VentanaPasajero extends JFrame {
 		cancelar.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();				
+				dispose();
+				new VentanaPrincipal();
 			}
 		});
 		

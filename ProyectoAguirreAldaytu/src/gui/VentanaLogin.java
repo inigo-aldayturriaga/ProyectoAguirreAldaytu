@@ -94,7 +94,7 @@ public class VentanaLogin extends JFrame {
 		getContentPane().add(pNorte,BorderLayout.NORTH);
 		getContentPane().add(pCentro,BorderLayout.CENTER);
 		getContentPane().add(pSur,BorderLayout.SOUTH);
-		
+		setVisible(true);
 		/**
 		 * Eventos
 		 */

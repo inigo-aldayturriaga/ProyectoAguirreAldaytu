@@ -62,7 +62,7 @@ public class VentanaUsuario extends JFrame {
 		DefaultTableModel modeloVuelos = new DefaultTableModel();
 		Object[] cabeceras = {"Hora Salida","Vuelo","Destino","Hora Llegada","Puerta","Observacion"};
 		modeloVuelos.setColumnIdentifiers(cabeceras);
-		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 		for (Vuelo v : DeustoAir.getVuelos()) {
 			String[] fila = {sdf.format(v.getHoraSalida()),v.getIdAvion(),v.getDestino(),sdf.format(v.getHoraLlegada()),String.valueOf(v.getPuerta()),v.getObservacion()};
 			modeloVuelos.addRow(fila);
@@ -116,7 +116,9 @@ public class VentanaUsuario extends JFrame {
 				Date d;
 				try {
 					d = (Date) sdf.parse((String) modeloVuelos.getValueAt(row, 0));
-					if(d.getTime()-System.currentTimeMillis()< 3600000) {
+					String horaActual = sdf.format(new Date(System.currentTimeMillis()));
+					Date dd = sdf.parse(horaActual);
+					if(Math.abs(d.getTime()-dd.getTime())< 3600000) {
 						c.setForeground(Color.RED);
 					}else {
 						c.setForeground(Color.BLACK);
